@@ -3,6 +3,10 @@ import { wait } from "../../utils/transitions.js";
 export function createTransitionLayer() {
   const element = document.createElement("div");
   element.className = "transition-layer";
+  element.innerHTML = `
+    <div class="transition-layer__wave"></div>
+    <div class="transition-layer__flare"></div>
+  `;
 
   return {
     element,

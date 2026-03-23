@@ -1,6 +1,12 @@
-export function vibratePattern(pattern = [12]) {
-  if ("vibrate" in navigator) {
-    navigator.vibrate(pattern);
+export function vibratePattern(pattern = [18]) {
+  if (!("vibrate" in navigator) || typeof navigator.vibrate !== "function") {
+    return false;
+  }
+
+  try {
+    return navigator.vibrate(pattern);
+  } catch {
+    return false;
   }
 }
 
@@ -10,7 +16,7 @@ export function bindToyButton(button, options = {}) {
   }
 
   const {
-    pattern = [12],
+    pattern = [18],
     activeClass = "is-pressed",
     popClass = "is-popped"
   } = options;
@@ -20,6 +26,7 @@ export function bindToyButton(button, options = {}) {
   button.dataset.feedbackBound = "true";
   button.addEventListener("pointerdown", () => {
     button.classList.add(activeClass);
+    vibratePattern(pattern);
   });
   button.addEventListener("pointerup", release);
   button.addEventListener("pointercancel", release);
@@ -29,7 +36,6 @@ export function bindToyButton(button, options = {}) {
     button.classList.remove(popClass);
     void button.offsetWidth;
     button.classList.add(popClass);
-    vibratePattern(pattern);
     window.setTimeout(() => button.classList.remove(popClass), 240);
   });
 

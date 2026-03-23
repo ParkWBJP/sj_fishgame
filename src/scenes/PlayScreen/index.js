@@ -57,48 +57,70 @@ function overlapsAtPoint(candidate, entities, gapScale = 0.88) {
   });
 }
 
-function pickSpawnCourse(stage, entityWidth, entities, isBoss) {
+function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
   const bounds = getMovementBounds(stage, entityWidth);
-  const laneCount = isBoss ? 3 : 6;
   const margin = entityWidth * 0.72;
-  const sides = ["left", "right", "top", "bottom"];
 
-  for (let attempt = 0; attempt < 40; attempt += 1) {
-    const side = sides[Math.floor(Math.random() * sides.length)];
-    const laneIndex = Math.floor(Math.random() * laneCount);
-    const laneY = laneCenter(bounds, laneCount, laneIndex);
-    const offsetY = randomBetween(-18, 18);
-    const offsetX = randomBetween(-42, 42);
-    let x = bounds.minX;
-    let y = laneY + offsetY;
-    let targetX = randomBetween(bounds.minX + 40, bounds.maxX - 20);
-    let targetY = clamp(laneY + randomBetween(-34, 34), bounds.minY, bounds.maxY);
+  if (themeId === "train") {
+    const laneCount = isBoss ? 2 : 4;
 
-    if (side === "left") {
-      x = -margin;
-      y = clamp(laneY + offsetY, bounds.minY + 10, bounds.maxY - 10);
-      targetX = randomBetween(bounds.minX + 90, bounds.maxX - 20);
-    } else if (side === "right") {
-      x = stage.clientWidth + margin;
-      y = clamp(laneY + offsetY, bounds.minY + 10, bounds.maxY - 10);
-      targetX = randomBetween(bounds.minX + 20, bounds.maxX - 90);
-    } else if (side === "top") {
-      x = clamp(bounds.minX + laneIndex * 68 + offsetX, bounds.minX + 20, bounds.maxX - 20);
-      y = bounds.minY - margin;
-      targetX = clamp(x + randomBetween(-180, 180), bounds.minX + 20, bounds.maxX - 20);
-      targetY = randomBetween(bounds.minY + 32, bounds.maxY - 90);
-    } else {
-      x = clamp(bounds.minX + laneIndex * 68 + offsetX, bounds.minX + 20, bounds.maxX - 20);
-      y = bounds.maxY + margin;
-      targetX = clamp(x + randomBetween(-180, 180), bounds.minX + 20, bounds.maxX - 20);
-      targetY = randomBetween(bounds.minY + 36, bounds.maxY - 120);
+    for (let attempt = 0; attempt < 32; attempt += 1) {
+      const side = Math.random() < 0.5 ? "left" : "right";
+      const laneIndex = Math.floor(Math.random() * laneCount);
+      const laneY = laneCenter(bounds, laneCount, laneIndex);
+      const y = clamp(laneY + randomBetween(-20, 20), bounds.minY + 8, bounds.maxY - 8);
+      const targetY = clamp(laneY + randomBetween(-18, 18), bounds.minY + 8, bounds.maxY - 8);
+      const x = side === "left" ? -margin : stage.clientWidth + margin;
+      const targetX = side === "left"
+        ? randomBetween(bounds.minX + 120, bounds.maxX - 24)
+        : randomBetween(bounds.minX + 24, bounds.maxX - 120);
+      const candidate = { x, y, width: entityWidth };
+      const waypoint = { x: targetX, y: targetY, width: entityWidth };
+
+      if (!overlapsAtPoint(candidate, entities, 0.98) && !overlapsAtPoint(waypoint, entities, 0.84)) {
+        return { x, y, targetX, targetY, bounds, bandY: laneY };
+      }
     }
+  } else {
+    const laneCount = isBoss ? 3 : 6;
+    const entries = [
+      { side: "left", vertical: "mid" },
+      { side: "right", vertical: "mid" },
+      { side: "left", vertical: "upper" },
+      { side: "right", vertical: "upper" },
+      { side: "left", vertical: "lower" },
+      { side: "right", vertical: "lower" }
+    ];
 
-    const candidate = { x, y, width: entityWidth };
-    const waypoint = { x: targetX, y: targetY, width: entityWidth };
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      const entry = entries[Math.floor(Math.random() * entries.length)];
+      const laneIndex = Math.floor(Math.random() * laneCount);
+      const laneY = laneCenter(bounds, laneCount, laneIndex);
+      const offsetY = randomBetween(-18, 18);
+      const sideLeft = entry.side === "left";
+      const x = sideLeft ? -margin : stage.clientWidth + margin;
+      let y = laneY + offsetY;
+      let targetX = sideLeft
+        ? randomBetween(bounds.minX + 120, bounds.maxX - 28)
+        : randomBetween(bounds.minX + 28, bounds.maxX - 120);
+      let targetY = clamp(laneY + randomBetween(-42, 42), bounds.minY + 8, bounds.maxY - 8);
 
-    if (!overlapsAtPoint(candidate, entities, 0.98) && !overlapsAtPoint(waypoint, entities, 0.82)) {
-      return { x, y, targetX, targetY, bounds };
+      if (entry.vertical === "upper") {
+        y = bounds.minY - margin * 0.55;
+        targetY = randomBetween(bounds.minY + 30, bounds.minY + 120);
+      } else if (entry.vertical === "lower") {
+        y = bounds.maxY + margin * 0.45;
+        targetY = randomBetween(bounds.maxY - 150, bounds.maxY - 30);
+      } else {
+        y = clamp(y, bounds.minY + 10, bounds.maxY - 10);
+      }
+
+      const candidate = { x, y, width: entityWidth };
+      const waypoint = { x: targetX, y: targetY, width: entityWidth };
+
+      if (!overlapsAtPoint(candidate, entities, 0.98) && !overlapsAtPoint(waypoint, entities, 0.82)) {
+        return { x, y, targetX, targetY, bounds, bandY: laneY };
+      }
     }
   }
 
@@ -107,12 +129,26 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss) {
     y: (bounds.minY + bounds.maxY) * 0.5,
     targetX: bounds.maxX - entityWidth * 0.2,
     targetY: (bounds.minY + bounds.maxY) * 0.5,
-    bounds
+    bounds,
+    bandY: (bounds.minY + bounds.maxY) * 0.5
   };
 }
 
-function chooseInteriorWaypoint(stage, entityWidth, entities, isBoss) {
+function chooseInteriorWaypoint(stage, entityWidth, entities, isBoss, themeId, bandY) {
   const bounds = getMovementBounds(stage, entityWidth);
+
+  if (themeId === "train") {
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      const candidate = {
+        x: randomBetween(bounds.minX + 40, bounds.maxX - 40),
+        y: clamp((bandY ?? (bounds.minY + bounds.maxY) * 0.5) + randomBetween(-22, 22), bounds.minY + 8, bounds.maxY - 8),
+        width: entityWidth
+      };
+      if (!overlapsAtPoint(candidate, entities, 0.78)) {
+        return candidate;
+      }
+    }
+  }
 
   for (let attempt = 0; attempt < 28; attempt += 1) {
     const candidate = {
@@ -127,30 +163,40 @@ function chooseInteriorWaypoint(stage, entityWidth, entities, isBoss) {
 
   return {
     x: randomBetween(bounds.minX + 32, bounds.maxX - 32),
-    y: randomBetween(bounds.minY + 24, bounds.maxY - 24)
+    y: themeId === "train"
+      ? clamp((bandY ?? (bounds.minY + bounds.maxY) * 0.5) + randomBetween(-18, 18), bounds.minY + 8, bounds.maxY - 8)
+      : randomBetween(bounds.minY + 24, bounds.maxY - 24)
   };
 }
 
-function setExitWaypoint(entity, host) {
+function setExitWaypoint(entity, host, themeId) {
   const margin = entity.width * 0.85;
   const leavingRight = entity.facing >= 0;
   entity.exiting = true;
   entity.targetX = leavingRight ? host.clientWidth + margin : -margin;
-  entity.targetY = clamp(
-    entity.y + randomBetween(-80, 80),
-    entity.width * 0.2 + 70,
-    host.clientHeight - entity.width * 0.2 - 24
-  );
+  entity.targetY = themeId === "train"
+    ? clamp(
+        (entity.bandY ?? entity.y) + randomBetween(-18, 18),
+        entity.width * 0.2 + 70,
+        host.clientHeight - entity.width * 0.2 - 24
+      )
+    : clamp(
+        entity.y + randomBetween(-80, 80),
+        entity.width * 0.2 + 70,
+        host.clientHeight - entity.width * 0.2 - 24
+      );
 }
 
-function createEntity(objectData, stage, entities, isBoss, isTarget) {
+function createEntity(objectData, stage, entities, isBoss, isTarget, themeId) {
   const component = createDragObject({ data: objectData, isBoss, isTarget });
   const width = getEntityWidth(stage, isBoss);
   component.element.style.width = `${width}px`;
   stage.append(component.element);
 
-  const course = pickSpawnCourse(stage, width, entities, isBoss);
-  const speed = isBoss ? randomBetween(56, 74) : randomBetween(42, 66);
+  const course = pickSpawnCourse(stage, width, entities, isBoss, themeId);
+  const speed = themeId === "train"
+    ? (isBoss ? randomBetween(70, 92) : randomBetween(58, 78))
+    : (isBoss ? randomBetween(56, 74) : randomBetween(42, 66));
   const facing = course.targetX >= course.x ? 1 : -1;
 
   return {
@@ -160,6 +206,7 @@ function createEntity(objectData, stage, entities, isBoss, isTarget) {
     y: course.y,
     targetX: course.targetX,
     targetY: course.targetY,
+    bandY: course.bandY,
     vx: 0,
     vy: 0,
     facing,
@@ -167,7 +214,9 @@ function createEntity(objectData, stage, entities, isBoss, isTarget) {
     baseRotation: randomBetween(-4, 4),
     wavePhase: randomBetween(0, Math.PI * 2),
     waveRate: randomBetween(0.8, 1.35),
-    waveStrength: isBoss ? randomBetween(10, 18) : randomBetween(14, 24),
+    waveStrength: themeId === "train"
+      ? (isBoss ? randomBetween(4, 8) : randomBetween(6, 10))
+      : (isBoss ? randomBetween(10, 18) : randomBetween(14, 24)),
     speed,
     dragging: false,
     cleared: false,
@@ -316,7 +365,8 @@ export function createPlayScreen({
       stage,
       entities,
       isBoss && objectData.id === target.id,
-      objectData.id === target.id
+      objectData.id === target.id,
+      theme.id
     );
     entities.push(entity);
     markEntityVisual(entity);
@@ -468,7 +518,14 @@ export function createPlayScreen({
     const distance = Math.hypot(dx, dy) || 1;
 
     if (!entity.exiting && distance < Math.max(34, entity.width * 0.12)) {
-      const nextWaypoint = chooseInteriorWaypoint(stage, entity.width, entities.filter((candidate) => candidate !== entity), isBoss);
+      const nextWaypoint = chooseInteriorWaypoint(
+        stage,
+        entity.width,
+        entities.filter((candidate) => candidate !== entity),
+        isBoss,
+        theme.id,
+        entity.bandY
+      );
       entity.targetX = nextWaypoint.x;
       entity.targetY = nextWaypoint.y;
     }
@@ -493,8 +550,8 @@ export function createPlayScreen({
       }
     });
 
-    const waveX = Math.cos(timestamp / 1000 * entity.waveRate + entity.wavePhase) * entity.waveStrength * 0.08;
-    const waveY = Math.sin(timestamp / 1000 * entity.waveRate + entity.wavePhase) * entity.waveStrength * 0.22;
+    const waveX = Math.cos(timestamp / 1000 * entity.waveRate + entity.wavePhase) * entity.waveStrength * (theme.id === "train" ? 0.03 : 0.08);
+    const waveY = Math.sin(timestamp / 1000 * entity.waveRate + entity.wavePhase) * entity.waveStrength * (theme.id === "train" ? 0.08 : 0.22);
 
     entity.vx = directionX * entity.speed + avoidX + waveX;
     entity.vy = directionY * entity.speed + avoidY + waveY;
@@ -507,7 +564,9 @@ export function createPlayScreen({
       entity.facing = entity.vx > 0 ? 1 : -1;
     }
 
-    const bank = clamp(entity.vy * 0.08 + Math.sin(timestamp / 720 + entity.wavePhase) * 1.8, -12, 12);
+    const bank = theme.id === "train"
+      ? clamp(entity.vy * 0.03, -4, 4)
+      : clamp(entity.vy * 0.08 + Math.sin(timestamp / 720 + entity.wavePhase) * 1.8, -12, 12);
     markEntityVisual(entity, bank);
   }
 
@@ -530,7 +589,7 @@ export function createPlayScreen({
           const targetCount = countVisibleTargets();
           const canExitTarget = entity.data.id !== target.id || targetCount > 1;
           if (canExitTarget) {
-            setExitWaypoint(entity, element);
+            setExitWaypoint(entity, element, theme.id);
           }
         }
 

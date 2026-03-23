@@ -1,6 +1,12 @@
-export function createNameBadge({ compact = false } = {}) {
+export function createNameBadge({ compact = false, variant = "default" } = {}) {
   const element = document.createElement("div");
-  element.className = compact ? "name-badge name-badge--compact" : "name-badge";
+  element.className = [
+    "name-badge",
+    compact ? "name-badge--compact" : "",
+    variant !== "default" ? `name-badge--${variant}` : ""
+  ]
+    .filter(Boolean)
+    .join(" ");
   element.innerHTML = `
     <img class="name-badge__stamp" src="/src/assets/images/shared/seojun-seojin-stamp.svg" alt="SEOJUN and SEOJIN" />
     <div class="name-badge__text">
