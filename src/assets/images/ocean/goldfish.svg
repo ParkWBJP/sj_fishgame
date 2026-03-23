@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldfish-skin" x1="72" y1="40" x2="330" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f6d06a"/>
+      <stop offset="0.58" stop-color="#eb8a46"/>
+      <stop offset="1" stop-color="#9f451d"/>
+    </linearGradient>
+    <linearGradient id="goldfish-belly" x1="126" y1="118" x2="262" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffe4b0"/>
+      <stop offset="1" stop-color="#eb8a46"/>
+    </linearGradient>
+    <linearGradient id="goldfish-fin" x1="150" y1="34" x2="246" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffbb6f"/>
+      <stop offset="1" stop-color="#fff2cb"/>
+    </linearGradient>
+    <radialGradient id="goldfish-shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(168 88) rotate(24) scale(132 84)">
+      <stop stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="goldfish-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#goldfish-shadow)">
+    <path d="M84 130C90 82 136 50 202 50C258 50 302 82 318 120C310 166 266 194 206 198C138 198 92 172 84 130Z" fill="url(#goldfish-skin)"/>
+    <path d="M120 146C140 170 174 184 212 180C244 178 272 162 294 142C268 182 226 198 178 198C142 198 124 180 120 146Z" fill="url(#goldfish-belly)" opacity="0.92"/>
+    <path d="M314 118C356 96 394 94 408 110C394 128 356 158 320 166C330 152 332 136 314 118Z" fill="url(#goldfish-skin)"/>
+    <path d="M174 58C184 26 206 10 222 14C224 42 236 60 256 82C230 76 200 68 174 58Z" fill="url(#goldfish-fin)" opacity="0.92"/>
+    <path d="M168 168C192 182 212 200 214 220C190 212 168 198 146 184C156 180 164 174 168 168Z" fill="url(#goldfish-fin)" opacity="0.88"/>
+    <path d="M84 130C90 82 136 50 202 50C258 50 302 82 318 120C310 166 266 194 206 198C138 198 92 172 84 130Z" fill="url(#goldfish-shine)" opacity="0.4"/>
+    
+    <path d="M132 86C186 64 246 70 294 106" stroke="#fff2cb" stroke-width="16" stroke-linecap="round" opacity="0.22"/>
+    <path d="M122 138C182 154 244 148 286 126" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.16"/>
+  
+    <path d="M138 102C150 118 150 146 140 160" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
+    <path d="M74 128C64 130 58 136 56 144" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
+    <circle cx="118" cy="112" r="15" fill="#ffffff"/>
+    <circle cx="120" cy="112" r="7.5" fill="#16253c"/>
+    <circle cx="123" cy="108" r="2.4" fill="#ffffff"/>
+    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
+    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+  </g>
+</svg>

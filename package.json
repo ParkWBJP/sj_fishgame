@@ -1,0 +1,11 @@
+{
+  "name": "seojun-seojin-arcade",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:assets": "node --input-type=module --eval \"await import('./scripts/generate-assets.mjs')\"",
+    "build": "npm run generate:assets && node --input-type=module --eval \"await import('./scripts/build-static.mjs')\"",
+    "dev": "node scripts/dev-server.mjs",
+    "start": "node scripts/dev-server.mjs"
+  }
+}

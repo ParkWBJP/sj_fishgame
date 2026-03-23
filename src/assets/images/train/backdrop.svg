@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="station-bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f2e7d7"/>
+      <stop offset="0.38" stop-color="#dce6ee"/>
+      <stop offset="0.78" stop-color="#b7cad8"/>
+      <stop offset="1" stop-color="#7d8d98"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="1600" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4a5965"/>
+      <stop offset="1" stop-color="#26323c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#station-bg)"/>
+  <path d="M0 84H1600V134H0V84Z" fill="url(#roof)"/>
+  <path d="M90 134L280 588H244L54 134H90Z" fill="#5a6875" fill-opacity="0.74"/>
+  <path d="M460 134L610 588H574L424 134H460Z" fill="#5a6875" fill-opacity="0.7"/>
+  <path d="M830 134L940 588H904L794 134H830Z" fill="#5a6875" fill-opacity="0.66"/>
+  <path d="M1190 134L1284 588H1248L1154 134H1190Z" fill="#5a6875" fill-opacity="0.68"/>
+  <rect x="0" y="574" width="1600" height="154" fill="#cab8a5"/>
+  <rect x="0" y="728" width="1600" height="172" fill="#767d84"/>
+  <rect x="0" y="710" width="1600" height="12" fill="#fff0b8"/>
+  <rect x="0" y="820" width="1600" height="10" fill="#fff0b8" fill-opacity="0.76"/>
+  <path d="M0 782H1600" stroke="#313941" stroke-width="34"/>
+  <path d="M0 862H1600" stroke="#313941" stroke-width="34"/>
+  <path d="M138 782V900M278 782V900M418 782V900M558 782V900M698 782V900M838 782V900M978 782V900M1118 782V900M1258 782V900M1398 782V900" stroke="#44342b" stroke-width="16"/>
+  <rect x="170" y="204" width="206" height="88" rx="18" fill="#264050" opacity="0.92"/>
+  <rect x="1160" y="188" width="228" height="96" rx="18" fill="#173343" opacity="0.88"/>
+  <text x="206" y="258" fill="#ffffff" font-size="30" font-weight="700" font-family="Segoe UI, Arial, sans-serif">TOKYO LINE</text>
+  <text x="1212" y="246" fill="#ffffff" font-size="30" font-weight="700" font-family="Segoe UI, Arial, sans-serif">PLATFORM</text>
+  <path d="M1030 584C1088 548 1164 538 1248 548C1316 556 1378 586 1444 638C1366 652 1288 656 1210 646C1134 638 1074 620 1030 584Z" fill="#f0f4f8" fill-opacity="0.44"/>
+  <path d="M1048 602C1116 570 1186 564 1262 572C1322 578 1382 600 1442 638C1362 646 1290 648 1218 640C1150 632 1094 620 1048 602Z" fill="#557089" fill-opacity="0.44"/>
+  <path d="M0 654C216 622 454 626 668 650C922 680 1164 682 1600 646V682C1172 718 918 720 654 690C434 664 212 660 0 696V654Z" fill="#ffffff" fill-opacity="0.08"/>
+</svg>

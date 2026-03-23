@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blue-tang-skin" x1="72" y1="40" x2="330" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3fb2ff"/>
+      <stop offset="0.58" stop-color="#1657b7"/>
+      <stop offset="1" stop-color="#0f2d6f"/>
+    </linearGradient>
+    <linearGradient id="blue-tang-belly" x1="126" y1="118" x2="262" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9ddfff"/>
+      <stop offset="1" stop-color="#1657b7"/>
+    </linearGradient>
+    <linearGradient id="blue-tang-fin" x1="150" y1="34" x2="246" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f2d540"/>
+      <stop offset="1" stop-color="#dff7ff"/>
+    </linearGradient>
+    <radialGradient id="blue-tang-shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(168 88) rotate(24) scale(132 84)">
+      <stop stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blue-tang-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#blue-tang-shadow)">
+    <path d="M66 128C76 84 132 54 210 58C274 62 326 90 344 124C328 164 276 190 208 194C126 196 76 172 66 128Z" fill="url(#blue-tang-skin)"/>
+    <path d="M108 144C132 166 170 176 214 172C250 170 286 156 312 136C286 172 240 190 184 192C140 192 114 174 108 144Z" fill="url(#blue-tang-belly)" opacity="0.92"/>
+    <path d="M340 122C386 102 430 102 446 118C430 134 386 166 346 176C354 160 356 140 340 122Z" fill="url(#blue-tang-skin)"/>
+    <path d="M188 62C194 30 214 10 230 12C232 38 242 58 262 82C238 78 212 72 188 62Z" fill="url(#blue-tang-fin)" opacity="0.92"/>
+    <path d="M178 166C204 178 224 196 232 216C206 210 180 196 154 180C166 178 174 172 178 166Z" fill="url(#blue-tang-fin)" opacity="0.88"/>
+    <path d="M66 128C76 84 132 54 210 58C274 62 326 90 344 124C328 164 276 190 208 194C126 196 76 172 66 128Z" fill="url(#blue-tang-shine)" opacity="0.4"/>
+    
+      <path d="M136 74C176 58 214 56 250 74C236 90 226 110 224 136C190 148 160 146 130 132C144 112 148 92 136 74Z" fill="#131f38" opacity="0.72"/>
+      <path d="M286 104C304 96 322 96 338 104C324 120 322 138 332 152C316 154 300 148 286 136Z" fill="#f3d144" opacity="0.95"/>
+    
+    <path d="M126 102C136 116 136 140 126 154" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
+    <path d="M58 128C48 130 42 136 40 144" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
+    <circle cx="100" cy="112" r="15" fill="#ffffff"/>
+    <circle cx="102" cy="112" r="7.5" fill="#182747"/>
+    <circle cx="105" cy="108" r="2.4" fill="#ffffff"/>
+    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
+    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+  </g>
+</svg>

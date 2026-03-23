@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="lionfish-skin" x1="72" y1="40" x2="330" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffd3bb"/>
+      <stop offset="0.58" stop-color="#e67e3b"/>
+      <stop offset="1" stop-color="#7a361b"/>
+    </linearGradient>
+    <linearGradient id="lionfish-belly" x1="126" y1="118" x2="262" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff0d9"/>
+      <stop offset="1" stop-color="#e67e3b"/>
+    </linearGradient>
+    <linearGradient id="lionfish-fin" x1="150" y1="34" x2="246" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8e401e"/>
+      <stop offset="1" stop-color="#fff6df"/>
+    </linearGradient>
+    <radialGradient id="lionfish-shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(168 88) rotate(24) scale(132 84)">
+      <stop stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="lionfish-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#lionfish-shadow)">
+    <path d="M84 132C88 88 132 48 194 50C246 52 290 78 316 116C308 162 270 192 214 196C146 200 94 176 84 132Z" fill="url(#lionfish-skin)"/>
+    <path d="M118 146C138 170 176 182 218 176C246 172 274 160 292 142C264 174 226 192 180 194C144 194 122 176 118 146Z" fill="url(#lionfish-belly)" opacity="0.92"/>
+    <path d="M312 118C352 92 392 86 404 104C392 122 352 152 318 160C328 148 332 134 312 118Z" fill="url(#lionfish-skin)"/>
+    <path d="M174 50C182 18 200 6 214 8C214 34 222 52 242 70C220 64 198 58 174 50Z" fill="url(#lionfish-fin)" opacity="0.92"/>
+    <path d="M176 170C202 182 226 202 230 220C206 214 186 202 158 186C168 182 174 176 176 170Z" fill="url(#lionfish-fin)" opacity="0.88"/>
+    <path d="M84 132C88 88 132 48 194 50C246 52 290 78 316 116C308 162 270 192 214 196C146 200 94 176 84 132Z" fill="url(#lionfish-shine)" opacity="0.4"/>
+    
+      <path d="M160 56L152 14M186 52L188 8M212 56L226 14M240 70L268 22M126 150L100 194M154 166L140 214M186 172L184 224" stroke="#6d2f14" stroke-width="6" stroke-linecap="round" opacity="0.64"/>
+      <path d="M126 74C164 92 192 110 214 138" stroke="#fff6d4" stroke-width="8" stroke-linecap="round" opacity="0.36"/>
+    
+    <path d="M136 110C146 124 146 144 136 158" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
+    <path d="M68 130C58 128 52 134 50 140" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
+    <circle cx="110" cy="112" r="15" fill="#ffffff"/>
+    <circle cx="112" cy="112" r="7.5" fill="#2e2930"/>
+    <circle cx="115" cy="108" r="2.4" fill="#ffffff"/>
+    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
+    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+  </g>
+</svg>

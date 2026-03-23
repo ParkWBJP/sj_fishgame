@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="puffer-skin" x1="72" y1="40" x2="330" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ecd79a"/>
+      <stop offset="0.58" stop-color="#c79b52"/>
+      <stop offset="1" stop-color="#6c4d22"/>
+    </linearGradient>
+    <linearGradient id="puffer-belly" x1="126" y1="118" x2="262" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff1cc"/>
+      <stop offset="1" stop-color="#c79b52"/>
+    </linearGradient>
+    <linearGradient id="puffer-fin" x1="150" y1="34" x2="246" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f6e6b6"/>
+      <stop offset="1" stop-color="#8c682b"/>
+    </linearGradient>
+    <radialGradient id="puffer-shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(168 88) rotate(24) scale(132 84)">
+      <stop stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="puffer-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#puffer-shadow)">
+    <path d="M92 132C92 74 138 34 204 38C262 42 304 80 314 124C308 172 264 204 202 206C132 204 94 176 92 132Z" fill="url(#puffer-skin)"/>
+    <path d="M126 144C142 172 174 190 212 188C242 186 272 172 292 146C270 188 228 208 178 206C148 204 130 182 126 144Z" fill="url(#puffer-belly)" opacity="0.92"/>
+    <path d="M306 120C350 98 390 96 402 112C390 128 350 164 316 170C324 156 326 136 306 120Z" fill="url(#puffer-skin)"/>
+    <path d="M170 42C180 10 204 0 220 6C216 34 230 56 252 80C226 68 196 56 170 42Z" fill="url(#puffer-fin)" opacity="0.92"/>
+    <path d="M160 178C182 194 198 214 196 232C176 220 154 206 134 188C148 186 156 182 160 178Z" fill="url(#puffer-fin)" opacity="0.88"/>
+    <path d="M92 132C92 74 138 34 204 38C262 42 304 80 314 124C308 172 264 204 202 206C132 204 94 176 92 132Z" fill="url(#puffer-shine)" opacity="0.4"/>
+    <circle cx="120" cy="82" r="5" fill="#7a5a23" opacity="0.35"/><circle cx="136" cy="100" r="6" fill="#7a5a23" opacity="0.35"/><circle cx="152" cy="82" r="7" fill="#7a5a23" opacity="0.35"/><circle cx="168" cy="100" r="5" fill="#7a5a23" opacity="0.35"/><circle cx="184" cy="82" r="6" fill="#7a5a23" opacity="0.35"/><circle cx="200" cy="100" r="7" fill="#7a5a23" opacity="0.35"/><circle cx="216" cy="82" r="5" fill="#7a5a23" opacity="0.35"/><circle cx="232" cy="100" r="6" fill="#7a5a23" opacity="0.35"/><circle cx="248" cy="82" r="7" fill="#7a5a23" opacity="0.35"/><circle cx="264" cy="100" r="5" fill="#7a5a23" opacity="0.35"/><circle cx="280" cy="82" r="6" fill="#7a5a23" opacity="0.35"/><circle cx="296" cy="100" r="7" fill="#7a5a23" opacity="0.35"/><circle cx="312" cy="82" r="5" fill="#7a5a23" opacity="0.35"/><circle cx="328" cy="100" r="6" fill="#7a5a23" opacity="0.35"/><circle cx="344" cy="82" r="7" fill="#7a5a23" opacity="0.35"/><circle cx="360" cy="100" r="5" fill="#7a5a23" opacity="0.35"/>
+    <path d="M142 104C154 120 154 146 144 164" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
+    <path d="M74 130C62 130 56 136 54 144" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
+    <circle cx="118" cy="112" r="15" fill="#ffffff"/>
+    <circle cx="120" cy="112" r="7.5" fill="#1f2b3b"/>
+    <circle cx="123" cy="108" r="2.4" fill="#ffffff"/>
+    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
+    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+  </g>
+</svg>

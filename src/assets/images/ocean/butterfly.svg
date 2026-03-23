@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="butterfly-skin" x1="72" y1="40" x2="330" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff3c8"/>
+      <stop offset="0.58" stop-color="#efc23f"/>
+      <stop offset="1" stop-color="#9a6f10"/>
+    </linearGradient>
+    <linearGradient id="butterfly-belly" x1="126" y1="118" x2="262" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff9df"/>
+      <stop offset="1" stop-color="#efc23f"/>
+    </linearGradient>
+    <linearGradient id="butterfly-fin" x1="150" y1="34" x2="246" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7d15f"/>
+      <stop offset="1" stop-color="#ffe48e"/>
+    </linearGradient>
+    <radialGradient id="butterfly-shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(168 88) rotate(24) scale(132 84)">
+      <stop stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="butterfly-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#butterfly-shadow)">
+    <path d="M92 132C92 74 138 34 204 38C262 42 304 80 314 124C308 172 264 204 202 206C132 204 94 176 92 132Z" fill="url(#butterfly-skin)"/>
+    <path d="M126 144C142 172 174 190 212 188C242 186 272 172 292 146C270 188 228 208 178 206C148 204 130 182 126 144Z" fill="url(#butterfly-belly)" opacity="0.92"/>
+    <path d="M306 120C350 98 390 96 402 112C390 128 350 164 316 170C324 156 326 136 306 120Z" fill="url(#butterfly-skin)"/>
+    <path d="M170 42C180 10 204 0 220 6C216 34 230 56 252 80C226 68 196 56 170 42Z" fill="url(#butterfly-fin)" opacity="0.92"/>
+    <path d="M160 178C182 194 198 214 196 232C176 220 154 206 134 188C148 186 156 182 160 178Z" fill="url(#butterfly-fin)" opacity="0.88"/>
+    <path d="M92 132C92 74 138 34 204 38C262 42 304 80 314 124C308 172 264 204 202 206C132 204 94 176 92 132Z" fill="url(#butterfly-shine)" opacity="0.4"/>
+    
+      <path d="M134 60C150 98 150 156 136 188" stroke="#151c24" stroke-width="18" stroke-linecap="round" opacity="0.92"/>
+      <path d="M230 62C248 92 254 130 246 170" stroke="#1f1a12" stroke-width="10" stroke-linecap="round" opacity="0.48"/>
+      <circle cx="116" cy="112" r="22" fill="none" stroke="#16181f" stroke-width="8" opacity="0.45"/>
+    
+    <path d="M142 104C154 120 154 146 144 164" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
+    <path d="M74 130C62 130 56 136 54 144" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
+    <circle cx="118" cy="112" r="15" fill="#ffffff"/>
+    <circle cx="120" cy="112" r="7.5" fill="#1e222d"/>
+    <circle cx="123" cy="108" r="2.4" fill="#ffffff"/>
+    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
+    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+  </g>
+</svg>

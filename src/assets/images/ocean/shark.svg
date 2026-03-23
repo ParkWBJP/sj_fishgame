@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="520" height="240" viewBox="0 0 520 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shark-skin" x1="72" y1="40" x2="330" y2="208" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8db5d1"/>
+      <stop offset="0.58" stop-color="#4f7aa1"/>
+      <stop offset="1" stop-color="#274b6d"/>
+    </linearGradient>
+    <linearGradient id="shark-belly" x1="126" y1="118" x2="262" y2="202" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#dbeef7"/>
+      <stop offset="1" stop-color="#4f7aa1"/>
+    </linearGradient>
+    <linearGradient id="shark-fin" x1="150" y1="34" x2="246" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#aacbe0"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="shark-shine" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(168 88) rotate(24) scale(132 84)">
+      <stop stop-color="#ffffff" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shark-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+  <g filter="url(#shark-shadow)">
+    <path d="M56 128C80 94 140 76 226 78C278 80 332 92 382 114C364 134 346 150 324 160C296 178 246 190 188 192C130 194 90 178 56 128Z" fill="url(#shark-skin)"/>
+    <path d="M122 148C154 166 204 170 254 164C292 160 324 146 350 126C330 160 282 188 214 194C168 196 138 182 122 148Z" fill="url(#shark-belly)" opacity="0.92"/>
+    <path d="M374 112C426 92 480 92 504 110C476 128 426 170 378 182C390 162 394 140 374 112Z" fill="url(#shark-skin)"/>
+    <path d="M204 82C214 38 238 12 256 18C258 48 270 76 298 104C272 96 240 88 204 82Z" fill="url(#shark-fin)" opacity="0.92"/>
+    <path d="M212 162C238 170 268 188 280 212C248 206 220 196 188 176C198 174 206 168 212 162Z" fill="url(#shark-fin)" opacity="0.88"/>
+    <path d="M56 128C80 94 140 76 226 78C278 80 332 92 382 114C364 134 346 150 324 160C296 178 246 190 188 192C130 194 90 178 56 128Z" fill="url(#shark-shine)" opacity="0.4"/>
+    
+      <path d="M144 108C152 120 152 136 144 148M162 104C170 118 170 138 162 152M180 102C188 116 188 136 180 150" stroke="#22496c" stroke-width="5" stroke-linecap="round" opacity="0.52"/>
+      <path d="M208 92C246 90 286 100 324 122" stroke="#d9eef7" stroke-width="6" stroke-linecap="round" opacity="0.32"/>
+    
+    <path d="M128 108C136 122 136 138 128 152" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
+    <path d="M54 130C42 130 34 136 30 146" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
+    <circle cx="106" cy="108" r="15" fill="#ffffff"/>
+    <circle cx="108" cy="108" r="7.5" fill="#172233"/>
+    <circle cx="111" cy="104" r="2.4" fill="#ffffff"/>
+    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
+    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+  </g>
+</svg>
