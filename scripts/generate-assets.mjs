@@ -162,6 +162,14 @@ function svgFish(spec) {
       <stop stop-color="#ffffff" stop-opacity="0.82"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="${spec.id}-rim" x1="108" y1="82" x2="310" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.56"/>
+      <stop offset="0.36" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="${spec.id}-scales" width="20" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(10)">
+      <path d="M2 16C6 8 14 8 18 16" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2" stroke-linecap="round"/>
+    </pattern>
     <filter id="${spec.id}-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
     </filter>
@@ -172,15 +180,19 @@ function svgFish(spec) {
     <path d="${geometry.tailPath}" fill="url(#${spec.id}-skin)"/>
     <path d="${geometry.topFinPath}" fill="url(#${spec.id}-fin)" opacity="0.92"/>
     <path d="${geometry.bottomFinPath}" fill="url(#${spec.id}-fin)" opacity="0.88"/>
-    <path d="${geometry.bodyPath}" fill="url(#${spec.id}-shine)" opacity="0.4"/>
+    <path d="${geometry.bodyPath}" fill="url(#${spec.id}-shine)" opacity="0.46"/>
+    <path d="${geometry.bodyPath}" fill="url(#${spec.id}-scales)" opacity="0.7"/>
+    <path d="${geometry.bodyPath}" fill="url(#${spec.id}-rim)" opacity="0.42"/>
     ${fishMarks(spec)}
+    <path d="M110 122C158 92 238 84 308 114" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.12"/>
+    <path d="M104 138C164 112 248 112 314 136" stroke="#0f2038" stroke-width="8" stroke-linecap="round" opacity="0.08"/>
+    <path d="M152 70C172 78 186 94 194 116" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.14"/>
     <path d="${geometry.gillPath}" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
     <path d="${geometry.mouthPath}" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
     <circle cx="${geometry.eyeX}" cy="${geometry.eyeY}" r="15" fill="#ffffff"/>
     <circle cx="${geometry.eyeX + 2}" cy="${geometry.eyeY}" r="7.5" fill="${spec.eye}"/>
     <circle cx="${geometry.eyeX + 5}" cy="${geometry.eyeY - 4}" r="2.4" fill="#ffffff"/>
-    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
-    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+    <ellipse cx="264" cy="162" rx="90" ry="20" fill="#081a2f" opacity="0.08"/>
   </g>
 </svg>`;
 }
@@ -213,6 +225,11 @@ function svgTrain(spec) {
       <stop stop-color="#dff4ff"/>
       <stop offset="1" stop-color="${spec.windowColor}"/>
     </linearGradient>
+    <linearGradient id="${spec.id}-metal" x1="82" y1="44" x2="478" y2="190" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.54"/>
+      <stop offset="0.28" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
     <filter id="${spec.id}-shadow" x="0" y="0" width="620" height="260" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#091523" flood-opacity="0.26"/>
     </filter>
@@ -222,6 +239,7 @@ function svgTrain(spec) {
     <rect x="246" y="44" width="284" height="134" rx="28" fill="url(#${spec.id}-shell)"/>
     <path d="M96 112H516" stroke="url(#${spec.id}-stripe)" stroke-width="20" stroke-linecap="round"/>
     <path d="M98 78C116 56 150 48 186 50C178 78 180 108 196 126H94C92 108 92 94 98 78Z" fill="url(#${spec.id}-glass)" opacity="0.92"/>
+    <path d="${nosePath}" fill="url(#${spec.id}-metal)" opacity="0.44"/>
     <rect x="134" y="64" width="42" height="32" rx="10" fill="${spec.windowColor}" opacity="0.86"/>
     <rect x="210" y="60" width="34" height="58" rx="12" fill="${spec.windowColor}" opacity="0.82"/>
     <rect x="268" y="66" width="42" height="30" rx="10" fill="${spec.windowColor}" opacity="0.84"/>
@@ -232,13 +250,18 @@ function svgTrain(spec) {
     <path d="M84 50H472" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.14"/>
     <path d="M118 94H510" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.22"/>
     <path d="M108 150H514" stroke="#1a2432" stroke-width="8" stroke-linecap="round" opacity="0.36"/>
+    <path d="M132 126H510" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.12"/>
     <rect x="150" y="166" width="318" height="12" rx="6" fill="#28313f" opacity="0.72"/>
+    <rect x="280" y="40" width="216" height="8" rx="4" fill="#ffffff" opacity="0.12"/>
+    <path d="M272 48H510" stroke="#202b38" stroke-width="4" opacity="0.16"/>
+    <path d="M264 176H514" stroke="#10161e" stroke-width="10" opacity="0.26"/>
     <circle cx="194" cy="188" r="21" fill="#273447"/>
     <circle cx="194" cy="188" r="10" fill="#91a6bb"/>
     <circle cx="412" cy="188" r="21" fill="#273447"/>
     <circle cx="412" cy="188" r="10" fill="#91a6bb"/>
     <circle cx="84" cy="114" r="10" fill="#fff4bf" opacity="0.86"/>
     <circle cx="104" cy="120" r="7" fill="#fff9df" opacity="0.6"/>
+    <path d="M66 114C46 120 30 132 20 150" stroke="#fff8d6" stroke-width="8" stroke-linecap="round" opacity="0.18"/>
     <path d="M104 42H458" stroke="#5d6b7b" stroke-width="7" stroke-linecap="round" opacity="0.36"/>
     <text x="522" y="170" fill="#ffffff" font-size="24" font-weight="700" font-family="Segoe UI, Arial, sans-serif">${spec.badge}</text>
   </g>
@@ -260,25 +283,39 @@ function svgBackdrop(theme) {
       <stop stop-color="#fff4be" stop-opacity="0.52"/>
       <stop offset="1" stop-color="#fff4be" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="sea-floor-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(796 810) rotate(90) scale(220 920)">
+      <stop stop-color="#aaf6ff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#aaf6ff" stop-opacity="0"/>
+    </radialGradient>
   </defs>
   <rect width="1600" height="900" fill="url(#sea-bg)"/>
   <ellipse cx="1160" cy="122" rx="520" ry="330" fill="url(#sea-light)"/>
+  <ellipse cx="796" cy="842" rx="940" ry="220" fill="url(#sea-floor-glow)"/>
   <path d="M1050 -20L1220 500" stroke="#ffffff" stroke-opacity="0.12" stroke-width="64" stroke-linecap="round"/>
   <path d="M1170 -40L1340 510" stroke="#ffffff" stroke-opacity="0.08" stroke-width="52" stroke-linecap="round"/>
   <path d="M1260 -20L1430 498" stroke="#d1f8ff" stroke-opacity="0.08" stroke-width="48" stroke-linecap="round"/>
+  <path d="M-40 664C140 636 320 644 490 694C638 738 760 742 894 714C1036 684 1180 648 1324 662C1446 674 1538 720 1640 746" stroke="#8de7ff" stroke-opacity="0.22" stroke-width="20" stroke-linecap="round"/>
   <g opacity="0.24">
     <path d="M0 674C132 652 272 684 392 718C546 762 706 760 846 720C994 678 1128 646 1280 672C1390 690 1500 736 1600 750" stroke="#8fe6ff" stroke-width="12" stroke-linecap="round"/>
     <path d="M-20 724C112 704 258 724 396 754C560 790 706 790 860 756C1002 726 1146 714 1288 736C1400 754 1502 792 1620 804" stroke="#d6fbff" stroke-opacity="0.52" stroke-width="9" stroke-linecap="round"/>
   </g>
   <path d="M0 710C120 676 226 676 332 716C432 754 560 776 692 748C822 718 926 676 1040 680C1186 686 1346 746 1600 792V900H0V710Z" fill="#0d4462" fill-opacity="0.72"/>
   <path d="M0 792C150 754 288 760 434 804C608 856 758 858 926 822C1088 788 1230 774 1600 842V900H0V792Z" fill="#0d2d44" fill-opacity="0.9"/>
+  <path d="M1140 520C1188 456 1260 426 1344 434C1430 444 1496 486 1566 560C1498 592 1416 610 1324 602C1242 594 1182 566 1140 520Z" fill="#17394e" fill-opacity="0.44"/>
+  <path d="M1164 534C1216 486 1276 468 1344 474C1404 480 1458 508 1510 558C1452 578 1392 586 1328 580C1262 572 1208 558 1164 534Z" fill="#7392a1" fill-opacity="0.18"/>
+  <path d="M1094 602C1146 570 1212 552 1284 556C1360 562 1428 596 1498 660" stroke="#d5edf7" stroke-opacity="0.18" stroke-width="10" stroke-linecap="round"/>
   <path d="M66 900C110 760 152 706 204 698C232 694 256 712 282 742C250 752 228 778 208 900H66Z" fill="#d16aa1" fill-opacity="0.42"/>
   <path d="M212 900C256 764 300 708 352 700C382 696 408 716 438 748C406 760 380 790 360 900H212Z" fill="#ff9d7c" fill-opacity="0.34"/>
+  <path d="M0 900C54 748 120 684 196 690C256 696 300 758 340 824C292 830 260 850 240 900H0Z" fill="#0d573c" fill-opacity="0.42"/>
+  <path d="M140 900C176 782 218 724 270 728C312 734 344 772 370 818C338 824 310 846 294 900H140Z" fill="#17805a" fill-opacity="0.42"/>
   <path d="M1280 900C1328 746 1388 694 1452 706C1488 712 1518 742 1546 780C1502 786 1470 820 1452 900H1280Z" fill="#f07e6c" fill-opacity="0.36"/>
+  <path d="M1414 900C1458 800 1512 760 1578 770C1602 774 1620 790 1640 812V900H1414Z" fill="#116244" fill-opacity="0.38"/>
   <circle cx="212" cy="164" r="14" fill="#d6fbff" fill-opacity="0.18"/>
   <circle cx="254" cy="208" r="9" fill="#d6fbff" fill-opacity="0.16"/>
   <circle cx="142" cy="246" r="7" fill="#d6fbff" fill-opacity="0.12"/>
   <circle cx="1396" cy="236" r="8" fill="#d6fbff" fill-opacity="0.14"/>
+  <circle cx="520" cy="184" r="6" fill="#d6fbff" fill-opacity="0.12"/>
+  <circle cx="558" cy="228" r="4" fill="#d6fbff" fill-opacity="0.1"/>
 </svg>`;
   }
 
@@ -298,21 +335,29 @@ function svgBackdrop(theme) {
   </defs>
   <rect width="1600" height="900" fill="url(#station-bg)"/>
   <path d="M0 84H1600V134H0V84Z" fill="url(#roof)"/>
+  <path d="M0 138H1600" stroke="#ffffff" stroke-opacity="0.18" stroke-width="6"/>
   <path d="M90 134L280 588H244L54 134H90Z" fill="#5a6875" fill-opacity="0.74"/>
   <path d="M460 134L610 588H574L424 134H460Z" fill="#5a6875" fill-opacity="0.7"/>
   <path d="M830 134L940 588H904L794 134H830Z" fill="#5a6875" fill-opacity="0.66"/>
   <path d="M1190 134L1284 588H1248L1154 134H1190Z" fill="#5a6875" fill-opacity="0.68"/>
+  <path d="M54 188H1546" stroke="#ffffff" stroke-opacity="0.08" stroke-width="18"/>
+  <path d="M54 252H1546" stroke="#1d2a35" stroke-opacity="0.08" stroke-width="10"/>
   <rect x="0" y="574" width="1600" height="154" fill="#cab8a5"/>
   <rect x="0" y="728" width="1600" height="172" fill="#767d84"/>
   <rect x="0" y="710" width="1600" height="12" fill="#fff0b8"/>
   <rect x="0" y="820" width="1600" height="10" fill="#fff0b8" fill-opacity="0.76"/>
+  <path d="M0 636C276 596 530 596 774 622C1032 650 1280 654 1600 616V674C1272 708 1020 706 764 680C524 656 270 654 0 696V636Z" fill="#ffffff" fill-opacity="0.08"/>
   <path d="M0 782H1600" stroke="#313941" stroke-width="34"/>
   <path d="M0 862H1600" stroke="#313941" stroke-width="34"/>
   <path d="M138 782V900M278 782V900M418 782V900M558 782V900M698 782V900M838 782V900M978 782V900M1118 782V900M1258 782V900M1398 782V900" stroke="#44342b" stroke-width="16"/>
   <rect x="170" y="204" width="206" height="88" rx="18" fill="#264050" opacity="0.92"/>
   <rect x="1160" y="188" width="228" height="96" rx="18" fill="#173343" opacity="0.88"/>
+  <rect x="182" y="214" width="182" height="14" rx="7" fill="#ffffff" fill-opacity="0.12"/>
+  <rect x="1174" y="198" width="200" height="14" rx="7" fill="#ffffff" fill-opacity="0.1"/>
   <text x="206" y="258" fill="#ffffff" font-size="30" font-weight="700" font-family="Segoe UI, Arial, sans-serif">TOKYO LINE</text>
   <text x="1212" y="246" fill="#ffffff" font-size="30" font-weight="700" font-family="Segoe UI, Arial, sans-serif">PLATFORM</text>
+  <path d="M940 582C986 532 1052 504 1126 504C1210 504 1284 538 1362 604C1274 626 1184 632 1092 622C1032 614 982 600 940 582Z" fill="#eef4f8" fill-opacity="0.36"/>
+  <path d="M972 596C1020 558 1076 538 1142 540C1214 542 1276 568 1342 618C1268 626 1194 628 1120 620C1062 614 1012 606 972 596Z" fill="#64798b" fill-opacity="0.34"/>
   <path d="M1030 584C1088 548 1164 538 1248 548C1316 556 1378 586 1444 638C1366 652 1288 656 1210 646C1134 638 1074 620 1030 584Z" fill="#f0f4f8" fill-opacity="0.44"/>
   <path d="M1048 602C1116 570 1186 564 1262 572C1322 578 1382 600 1442 638C1362 646 1290 648 1218 640C1150 632 1094 620 1048 602Z" fill="#557089" fill-opacity="0.44"/>
   <path d="M0 654C216 622 454 626 668 650C922 680 1164 682 1600 646V682C1172 718 918 720 654 690C434 664 212 660 0 696V654Z" fill="#ffffff" fill-opacity="0.08"/>

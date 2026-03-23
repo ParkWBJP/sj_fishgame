@@ -482,6 +482,9 @@ h4,
   inset: 0;
   overflow: hidden;
   z-index: 1;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 22%);
 }
 
 .play-screen__trail {
@@ -675,9 +678,11 @@ h4,
 .drag-object img {
   width: 100%;
   height: auto;
+  transform: scaleX(var(--face, 1));
+  transition: transform 240ms ease, filter var(--transition-fast);
   filter:
-    drop-shadow(0 24px 20px rgba(4, 19, 40, 0.28))
-    drop-shadow(0 2px 2px rgba(255, 255, 255, 0.16));
+    drop-shadow(0 28px 24px rgba(4, 19, 40, 0.34))
+    drop-shadow(0 6px 5px rgba(255, 255, 255, 0.16));
 }
 
 .drag-object__glow {
@@ -691,7 +696,7 @@ h4,
 }
 
 .drag-object--target .drag-object__glow {
-  opacity: 0.8;
+  opacity: 0.94;
 }
 
 .drag-object.is-selected {
@@ -1123,6 +1128,13 @@ h4,
   animation: oceanRays 16s ease-in-out infinite;
 }
 
+.ambient-backdrop--ocean .ambient-backdrop__layer--depth-haze {
+  background:
+    radial-gradient(circle at 72% 18%, rgba(255, 247, 209, 0.16), transparent 22%),
+    radial-gradient(circle at 24% 42%, rgba(166, 235, 255, 0.08), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 24%, rgba(3, 15, 24, 0.18) 100%);
+}
+
 .ambient-backdrop--ocean .ambient-backdrop__layer--caustics {
   background:
     radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.22), transparent 18%),
@@ -1138,12 +1150,75 @@ h4,
   animation: causticShift 20s linear infinite;
 }
 
+.ambient-backdrop--ocean .ambient-backdrop__layer--shoal {
+  background:
+    radial-gradient(circle at 58% 32%, rgba(211, 245, 255, 0.16) 0 2px, transparent 3px),
+    radial-gradient(circle at 60% 34%, rgba(211, 245, 255, 0.12) 0 2px, transparent 3px),
+    radial-gradient(circle at 62% 36%, rgba(211, 245, 255, 0.12) 0 2px, transparent 3px),
+    radial-gradient(circle at 64% 32%, rgba(211, 245, 255, 0.12) 0 2px, transparent 3px),
+    radial-gradient(circle at 68% 28%, rgba(211, 245, 255, 0.12) 0 2px, transparent 3px),
+    radial-gradient(circle at 72% 30%, rgba(211, 245, 255, 0.12) 0 2px, transparent 3px);
+  opacity: 0.58;
+  filter: blur(1px);
+  animation: currentDrift 18s linear infinite;
+}
+
+.ambient-backdrop--ocean .ambient-backdrop__layer--wreck {
+  background:
+    radial-gradient(ellipse at 88% 70%, rgba(255, 255, 255, 0.08), transparent 18%),
+    linear-gradient(135deg, transparent 76%, rgba(18, 47, 62, 0.58) 76.4% 78%, transparent 78.4%),
+    linear-gradient(135deg, transparent 80%, rgba(147, 171, 181, 0.18) 80.4% 81%, transparent 81.4%),
+    radial-gradient(ellipse at 86% 74%, rgba(18, 43, 59, 0.54) 0 10%, transparent 11%);
+  opacity: 0.84;
+}
+
+.ambient-backdrop--ocean .ambient-backdrop__layer--seabed-glow {
+  background:
+    radial-gradient(ellipse at 48% 100%, rgba(182, 243, 255, 0.16), transparent 58%),
+    radial-gradient(ellipse at 18% 88%, rgba(170, 241, 221, 0.1), transparent 26%),
+    radial-gradient(ellipse at 84% 90%, rgba(255, 230, 170, 0.08), transparent 22%);
+}
+
 .ambient-backdrop--ocean .ambient-backdrop__layer--reef {
   background:
     radial-gradient(ellipse at 16% 108%, rgba(16, 52, 77, 0.84) 0 20%, transparent 22%),
     radial-gradient(ellipse at 36% 108%, rgba(18, 71, 96, 0.78) 0 18%, transparent 20%),
     radial-gradient(ellipse at 78% 110%, rgba(26, 71, 88, 0.82) 0 22%, transparent 24%),
     linear-gradient(180deg, transparent 64%, rgba(4, 19, 31, 0.42) 100%);
+}
+
+.ambient-backdrop--ocean .ambient-backdrop__layer--kelp-left,
+.ambient-backdrop--ocean .ambient-backdrop__layer--kelp-right {
+  bottom: 0;
+  top: auto;
+  height: 46%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.72;
+}
+
+.ambient-backdrop--ocean .ambient-backdrop__layer--kelp-left {
+  left: -2%;
+  right: 68%;
+  background-image:
+    radial-gradient(ellipse at 32% 100%, rgba(17, 77, 57, 0.76) 0 24%, transparent 25%),
+    linear-gradient(78deg, transparent 28%, rgba(43, 145, 99, 0.82) 29% 31%, transparent 32%),
+    linear-gradient(70deg, transparent 46%, rgba(86, 175, 112, 0.76) 47% 49%, transparent 50%),
+    linear-gradient(86deg, transparent 60%, rgba(39, 127, 89, 0.74) 61% 63%, transparent 64%);
+  animation: kelpSwayLeft 7s ease-in-out infinite;
+  transform-origin: left bottom;
+}
+
+.ambient-backdrop--ocean .ambient-backdrop__layer--kelp-right {
+  left: 76%;
+  right: -2%;
+  background-image:
+    radial-gradient(ellipse at 66% 100%, rgba(20, 86, 60, 0.72) 0 26%, transparent 27%),
+    linear-gradient(104deg, transparent 26%, rgba(58, 154, 95, 0.8) 27% 29%, transparent 30%),
+    linear-gradient(114deg, transparent 42%, rgba(79, 182, 116, 0.74) 43% 45%, transparent 46%),
+    linear-gradient(100deg, transparent 58%, rgba(36, 128, 86, 0.72) 59% 61%, transparent 62%);
+  animation: kelpSwayRight 7.8s ease-in-out infinite;
+  transform-origin: right bottom;
 }
 
 .ambient-backdrop--ocean .ambient-backdrop__layer--current {
@@ -1189,10 +1264,42 @@ h4,
   animation: stationLight 9s ease-in-out infinite;
 }
 
+.ambient-backdrop--train .ambient-backdrop__layer--beam-grid {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0 6px,
+      transparent 6px 150px
+    ),
+    linear-gradient(180deg, rgba(23, 31, 40, 0.22), transparent 34%);
+  opacity: 0.56;
+}
+
+.ambient-backdrop--train .ambient-backdrop__layer--distant-train {
+  left: 54%;
+  right: 8%;
+  top: 40%;
+  bottom: 24%;
+  border-radius: 44px 80px 40px 40px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(124, 140, 160, 0.18)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.22) 16%, rgba(255, 255, 255, 0.04) 80%);
+  filter: blur(10px);
+  opacity: 0.32;
+}
+
 .ambient-backdrop--train .ambient-backdrop__layer--platform {
   background:
     linear-gradient(180deg, transparent 56%, rgba(58, 65, 74, 0.32) 74%, rgba(27, 31, 37, 0.56) 100%),
     linear-gradient(90deg, transparent 0 25%, rgba(255, 244, 210, 0.09) 25% 25.5%, transparent 25.5%);
+}
+
+.ambient-backdrop--train .ambient-backdrop__layer--platform-props {
+  background:
+    radial-gradient(ellipse at 14% 66%, rgba(18, 26, 34, 0.3) 0 6%, transparent 7%),
+    radial-gradient(ellipse at 20% 66%, rgba(18, 26, 34, 0.22) 0 4%, transparent 5%),
+    linear-gradient(180deg, transparent 58%, rgba(255, 244, 210, 0.1) 58.8% 59.6%, transparent 60%),
+    linear-gradient(180deg, transparent 68%, rgba(24, 30, 36, 0.24) 68.4% 82%, transparent 82.4%);
 }
 
 .ambient-backdrop--train .ambient-backdrop__layer--signal {
@@ -1200,6 +1307,13 @@ h4,
     radial-gradient(circle at 18% 20%, rgba(255, 229, 160, 0.28), transparent 10%),
     radial-gradient(circle at 82% 18%, rgba(193, 240, 255, 0.2), transparent 9%),
     linear-gradient(90deg, transparent 18%, rgba(255, 255, 255, 0.05) 18.2% 18.4%, transparent 18.6%);
+}
+
+.ambient-backdrop--train .ambient-backdrop__layer--track-gloss {
+  background:
+    linear-gradient(180deg, transparent 78%, rgba(255, 245, 214, 0.18) 79%, transparent 80%),
+    linear-gradient(180deg, transparent 88%, rgba(255, 245, 214, 0.12) 89%, transparent 90%);
+  opacity: 0.74;
 }
 
 .ambient-backdrop--train .ambient-backdrop__layer--train-pass {
@@ -1419,6 +1533,26 @@ h4,
   100% {
     transform: translate3d(-18px, 22px, 0);
     opacity: 0.12;
+  }
+}
+
+@keyframes kelpSwayLeft {
+  0%,
+  100% {
+    transform: rotate(-2deg) translateX(0);
+  }
+  50% {
+    transform: rotate(4deg) translateX(10px);
+  }
+}
+
+@keyframes kelpSwayRight {
+  0%,
+  100% {
+    transform: rotate(2deg) translateX(0);
+  }
+  50% {
+    transform: rotate(-4deg) translateX(-12px);
   }
 }
 

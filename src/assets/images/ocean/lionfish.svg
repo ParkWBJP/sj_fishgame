@@ -18,6 +18,14 @@
       <stop stop-color="#ffffff" stop-opacity="0.82"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
+    <linearGradient id="lionfish-rim" x1="108" y1="82" x2="310" y2="170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.56"/>
+      <stop offset="0.36" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="lionfish-scales" width="20" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(10)">
+      <path d="M2 16C6 8 14 8 18 16" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2" stroke-linecap="round"/>
+    </pattern>
     <filter id="lionfish-shadow" x="0" y="0" width="520" height="240" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#071a2d" flood-opacity="0.28"/>
     </filter>
@@ -28,17 +36,21 @@
     <path d="M312 118C352 92 392 86 404 104C392 122 352 152 318 160C328 148 332 134 312 118Z" fill="url(#lionfish-skin)"/>
     <path d="M174 50C182 18 200 6 214 8C214 34 222 52 242 70C220 64 198 58 174 50Z" fill="url(#lionfish-fin)" opacity="0.92"/>
     <path d="M176 170C202 182 226 202 230 220C206 214 186 202 158 186C168 182 174 176 176 170Z" fill="url(#lionfish-fin)" opacity="0.88"/>
-    <path d="M84 132C88 88 132 48 194 50C246 52 290 78 316 116C308 162 270 192 214 196C146 200 94 176 84 132Z" fill="url(#lionfish-shine)" opacity="0.4"/>
+    <path d="M84 132C88 88 132 48 194 50C246 52 290 78 316 116C308 162 270 192 214 196C146 200 94 176 84 132Z" fill="url(#lionfish-shine)" opacity="0.46"/>
+    <path d="M84 132C88 88 132 48 194 50C246 52 290 78 316 116C308 162 270 192 214 196C146 200 94 176 84 132Z" fill="url(#lionfish-scales)" opacity="0.7"/>
+    <path d="M84 132C88 88 132 48 194 50C246 52 290 78 316 116C308 162 270 192 214 196C146 200 94 176 84 132Z" fill="url(#lionfish-rim)" opacity="0.42"/>
     
       <path d="M160 56L152 14M186 52L188 8M212 56L226 14M240 70L268 22M126 150L100 194M154 166L140 214M186 172L184 224" stroke="#6d2f14" stroke-width="6" stroke-linecap="round" opacity="0.64"/>
       <path d="M126 74C164 92 192 110 214 138" stroke="#fff6d4" stroke-width="8" stroke-linecap="round" opacity="0.36"/>
     
+    <path d="M110 122C158 92 238 84 308 114" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.12"/>
+    <path d="M104 138C164 112 248 112 314 136" stroke="#0f2038" stroke-width="8" stroke-linecap="round" opacity="0.08"/>
+    <path d="M152 70C172 78 186 94 194 116" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.14"/>
     <path d="M136 110C146 124 146 144 136 158" stroke="#233244" stroke-width="5" stroke-linecap="round" opacity="0.42"/>
     <path d="M68 130C58 128 52 134 50 140" stroke="#243448" stroke-width="4" stroke-linecap="round" opacity="0.48"/>
     <circle cx="110" cy="112" r="15" fill="#ffffff"/>
     <circle cx="112" cy="112" r="7.5" fill="#2e2930"/>
     <circle cx="115" cy="108" r="2.4" fill="#ffffff"/>
-    <path d="M120 98C184 74 256 78 312 114" stroke="#ffffff" stroke-width="6" stroke-linecap="round" opacity="0.16"/>
-    <path d="M126 124C184 102 256 104 308 132" stroke="#102138" stroke-width="4" stroke-linecap="round" opacity="0.1"/>
+    <ellipse cx="264" cy="162" rx="90" ry="20" fill="#081a2f" opacity="0.08"/>
   </g>
 </svg>

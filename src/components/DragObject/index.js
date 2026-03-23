@@ -15,10 +15,11 @@ export function createDragObject({ data, isBoss = false, isTarget = false }) {
 
   const api = {
     element,
-    setPosition(x, y, rotation = 0) {
+    setPosition(x, y, rotation = 0, facing = 1) {
       element.style.setProperty("--x", `${x}px`);
       element.style.setProperty("--y", `${y}px`);
       element.style.setProperty("--rotate", `${rotation}deg`);
+      element.style.setProperty("--face", facing);
     },
     setSelected(active) {
       element.classList.toggle("is-selected", active);
