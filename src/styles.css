@@ -2696,3 +2696,498 @@ h4,
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   }
 }
+
+@keyframes oceanWelcomeCamera {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.08) translate3d(0, -1.8%, 0);
+  }
+}
+
+@keyframes oceanWelcomeSwimA {
+  0% {
+    transform: translate3d(-28vw, 0, 0) scaleX(1) rotate(-3deg);
+  }
+  50% {
+    transform: translate3d(40vw, -2vh, 0) scaleX(1) rotate(2deg);
+  }
+  100% {
+    transform: translate3d(108vw, 1vh, 0) scaleX(1) rotate(-2deg);
+  }
+}
+
+@keyframes oceanWelcomeSwimB {
+  0% {
+    transform: translate3d(24vw, 0, 0) scaleX(-1) rotate(2deg);
+  }
+  50% {
+    transform: translate3d(-26vw, 1vh, 0) scaleX(-1) rotate(-2deg);
+  }
+  100% {
+    transform: translate3d(-86vw, -1vh, 0) scaleX(-1) rotate(1deg);
+  }
+}
+
+@keyframes oceanWelcomeSwimC {
+  0% {
+    transform: translate3d(-18vw, 0, 0) scaleX(1) rotate(-1deg);
+  }
+  50% {
+    transform: translate3d(26vw, -1vh, 0) scaleX(1) rotate(2deg);
+  }
+  100% {
+    transform: translate3d(94vw, 2vh, 0) scaleX(1) rotate(-1deg);
+  }
+}
+
+@keyframes oceanWelcomeSilhouetteA {
+  0% {
+    transform: translate3d(0, 0, 0) scaleX(1);
+    opacity: 0;
+  }
+  10%,
+  78% {
+    opacity: 0.26;
+  }
+  100% {
+    transform: translate3d(34vw, -2vh, 0) scaleX(1);
+    opacity: 0;
+  }
+}
+
+@keyframes oceanWelcomeSilhouetteB {
+  0% {
+    transform: translate3d(0, 0, 0) scaleX(-1);
+    opacity: 0;
+  }
+  12%,
+  84% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate3d(-30vw, 2vh, 0) scaleX(-1);
+    opacity: 0;
+  }
+}
+
+.scene--welcome {
+  padding: 0;
+  background: #062238;
+}
+
+.scene--welcome .name-badge--ticket {
+  margin: 0;
+  padding: 10px 14px;
+  transform-origin: left top;
+}
+
+.scene--welcome .name-badge__stamp {
+  width: min(16vw, 168px);
+}
+
+.scene--welcome .name-badge__ko {
+  font-size: 0.96rem;
+}
+
+.scene--welcome .name-badge__ja {
+  font-size: 0.82rem;
+}
+
+.ocean-welcome {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(201, 244, 255, 0.18), transparent 18%),
+    linear-gradient(180deg, #0a5d80 0%, #0a4568 34%, #093653 60%, #06253b 100%);
+}
+
+.ocean-welcome__camera {
+  position: absolute;
+  inset: -3%;
+  animation: oceanWelcomeCamera 12s ease-in-out infinite alternate;
+}
+
+.ocean-welcome__backdrop,
+.ocean-welcome__beams,
+.ocean-welcome__caustics,
+.ocean-welcome__far-silhouettes,
+.ocean-welcome__bubble-field,
+.ocean-welcome__mid-flow,
+.ocean-welcome__swimmers,
+.ocean-welcome__foreground,
+.ocean-welcome__ui {
+  position: absolute;
+  inset: 0;
+}
+
+.ocean-welcome__backdrop {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 24%, rgba(4, 16, 24, 0.16)),
+    url("/src/assets/images/ocean/backdrop.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+.ocean-welcome__beams {
+  background:
+    linear-gradient(104deg, transparent 8%, rgba(255, 255, 255, 0.16) 16%, transparent 24%),
+    linear-gradient(96deg, transparent 40%, rgba(211, 245, 255, 0.12) 48%, transparent 56%),
+    linear-gradient(88deg, transparent 70%, rgba(255, 255, 255, 0.08) 77%, transparent 84%);
+  mix-blend-mode: screen;
+  opacity: 0.72;
+  animation: oceanRays 20s ease-in-out infinite;
+}
+
+.ocean-welcome__caustics {
+  background:
+    repeating-linear-gradient(
+      104deg,
+      rgba(199, 246, 255, 0.08) 0 14px,
+      rgba(255, 255, 255, 0.02) 14px 26px,
+      rgba(199, 246, 255, 0.06) 26px 40px
+    ),
+    radial-gradient(circle at 24% 20%, rgba(255, 255, 255, 0.14), transparent 18%),
+    radial-gradient(circle at 74% 18%, rgba(215, 247, 255, 0.12), transparent 16%);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  animation: causticShift 18s linear infinite;
+}
+
+.ocean-welcome__far-silhouettes {
+  pointer-events: none;
+}
+
+.ocean-welcome__silhouette {
+  position: absolute;
+  width: 120px;
+  height: 44px;
+  background:
+    radial-gradient(circle at 22% 50%, rgba(197, 235, 247, 0.7) 0 10px, transparent 11px),
+    linear-gradient(90deg, rgba(197, 235, 247, 0.4), rgba(197, 235, 247, 0.18));
+  clip-path: polygon(0 52%, 18% 16%, 78% 18%, 100% 50%, 78% 82%, 18% 84%);
+  filter: blur(1.4px);
+}
+
+.ocean-welcome__silhouette--a {
+  left: 18%;
+  top: 22%;
+  animation: oceanWelcomeSilhouetteA 20s linear infinite;
+}
+
+.ocean-welcome__silhouette--b {
+  right: 16%;
+  top: 30%;
+  width: 84px;
+  height: 30px;
+  animation: oceanWelcomeSilhouetteB 16s linear infinite -5s;
+}
+
+.ocean-welcome__silhouette--c {
+  left: 56%;
+  top: 16%;
+  width: 68px;
+  height: 24px;
+  animation: oceanWelcomeSilhouetteA 24s linear infinite -8s;
+}
+
+.ocean-welcome__bubble-field {
+  pointer-events: none;
+}
+
+.ocean-welcome__bubble {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 249, 255, 0.54);
+  background:
+    radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.08) 46%, transparent 62%);
+  box-shadow: inset -4px -6px 8px rgba(89, 196, 222, 0.12);
+  animation: bubbleRise linear infinite;
+}
+
+.ocean-welcome__mid-flow {
+  background:
+    radial-gradient(circle at 16% 74%, rgba(124, 228, 255, 0.12) 0 2px, transparent 3px),
+    radial-gradient(circle at 36% 64%, rgba(124, 228, 255, 0.1) 0 2px, transparent 3px),
+    radial-gradient(circle at 62% 70%, rgba(255, 255, 255, 0.1) 0 2px, transparent 3px),
+    radial-gradient(circle at 82% 56%, rgba(124, 228, 255, 0.1) 0 2px, transparent 3px);
+  animation: currentDrift 16s linear infinite;
+}
+
+.ocean-welcome__swimmers {
+  pointer-events: none;
+}
+
+.ocean-welcome__fish {
+  position: absolute;
+  filter:
+    drop-shadow(0 22px 26px rgba(5, 17, 28, 0.26))
+    saturate(1.06);
+}
+
+.ocean-welcome__fish--a {
+  left: -22vw;
+  top: 34%;
+  width: min(18vw, 220px);
+  animation: oceanWelcomeSwimA 24s linear infinite;
+}
+
+.ocean-welcome__fish--b {
+  right: -18vw;
+  top: 56%;
+  width: min(15vw, 180px);
+  animation: oceanWelcomeSwimB 20s linear infinite -6s;
+}
+
+.ocean-welcome__fish--c {
+  left: -14vw;
+  top: 66%;
+  width: min(14vw, 170px);
+  animation: oceanWelcomeSwimC 26s linear infinite -11s;
+}
+
+.ocean-welcome__foreground {
+  pointer-events: none;
+}
+
+.ocean-welcome__kelp,
+.ocean-welcome__coral,
+.ocean-welcome__sand {
+  position: absolute;
+  bottom: 0;
+}
+
+.ocean-welcome__kelp {
+  width: 20vw;
+  height: 42vh;
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.82;
+}
+
+.ocean-welcome__kelp--left {
+  left: -1.5vw;
+  background-image:
+    radial-gradient(ellipse at 24% 100%, rgba(14, 81, 60, 0.86) 0 24%, transparent 25%),
+    linear-gradient(78deg, transparent 24%, rgba(44, 145, 101, 0.84) 25% 28%, transparent 29%),
+    linear-gradient(70deg, transparent 42%, rgba(88, 182, 118, 0.76) 43% 46%, transparent 47%),
+    linear-gradient(86deg, transparent 58%, rgba(34, 127, 86, 0.74) 59% 62%, transparent 63%);
+  transform-origin: left bottom;
+  animation: kelpSwayLeft 7s ease-in-out infinite;
+}
+
+.ocean-welcome__kelp--right {
+  right: -1vw;
+  width: 18vw;
+  background-image:
+    radial-gradient(ellipse at 76% 100%, rgba(18, 88, 62, 0.82) 0 24%, transparent 25%),
+    linear-gradient(102deg, transparent 26%, rgba(58, 154, 95, 0.8) 27% 30%, transparent 31%),
+    linear-gradient(114deg, transparent 44%, rgba(79, 182, 116, 0.74) 45% 48%, transparent 49%),
+    linear-gradient(100deg, transparent 61%, rgba(36, 128, 86, 0.72) 62% 65%, transparent 66%);
+  transform-origin: right bottom;
+  animation: kelpSwayRight 8s ease-in-out infinite;
+}
+
+.ocean-welcome__coral {
+  width: 18vw;
+  height: 16vh;
+  border-radius: 45% 55% 0 0;
+  filter: blur(0.2px);
+}
+
+.ocean-welcome__coral--left {
+  left: 8vw;
+  background:
+    radial-gradient(circle at 30% 70%, rgba(255, 160, 128, 0.5), transparent 30%),
+    radial-gradient(circle at 56% 52%, rgba(255, 210, 124, 0.32), transparent 26%),
+    linear-gradient(180deg, rgba(229, 126, 101, 0.46), rgba(155, 72, 58, 0.24));
+}
+
+.ocean-welcome__coral--center {
+  left: 42vw;
+  width: 12vw;
+  height: 12vh;
+  background:
+    radial-gradient(circle at 30% 60%, rgba(255, 206, 121, 0.46), transparent 28%),
+    linear-gradient(180deg, rgba(224, 144, 87, 0.42), rgba(146, 88, 52, 0.22));
+}
+
+.ocean-welcome__coral--right {
+  right: 10vw;
+  width: 16vw;
+  background:
+    radial-gradient(circle at 50% 54%, rgba(239, 139, 159, 0.42), transparent 28%),
+    linear-gradient(180deg, rgba(210, 105, 127, 0.4), rgba(133, 61, 81, 0.18));
+}
+
+.ocean-welcome__sand {
+  left: 0;
+  right: 0;
+  height: 16vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(187, 245, 255, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(240, 232, 205, 0.08), rgba(235, 227, 194, 0.16) 36%, rgba(13, 41, 54, 0.04) 100%);
+}
+
+.ocean-welcome__ui {
+  z-index: 4;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  padding: 3vh 3vw 4vh;
+}
+
+.ocean-welcome__badge-slot {
+  justify-self: start;
+}
+
+.ocean-welcome__title-chip {
+  align-self: start;
+  justify-self: center;
+  display: grid;
+  gap: 4px;
+  padding: 12px 20px;
+  margin-top: 2vh;
+  border-radius: 999px;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 241, 0.92), rgba(219, 245, 255, 0.82));
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow:
+    0 16px 30px rgba(5, 17, 28, 0.18),
+    inset 0 6px 12px rgba(255, 255, 255, 0.18);
+  text-align: center;
+}
+
+.ocean-welcome__title-ko,
+.ocean-welcome__title-ja {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.ocean-welcome__title-ko {
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  color: #1c5167;
+}
+
+.ocean-welcome__title-ja {
+  font-size: clamp(0.9rem, 1.2vw, 1.2rem);
+  color: #5d5f84;
+}
+
+.ocean-welcome__start-slot {
+  align-self: end;
+  justify-self: center;
+}
+
+.welcome-start-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-width: min(38vw, 320px);
+  padding: 18px 30px;
+  border: 4px solid #9befff;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.98), transparent 30%),
+    radial-gradient(circle at 74% 84%, rgba(255, 118, 64, 0.18), transparent 26%),
+    linear-gradient(180deg, #ffd93f, #ffa31a 56%, #ff6500);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.88) inset,
+    0 12px 0 rgba(42, 95, 132, 0.3),
+    0 24px 34px rgba(8, 18, 34, 0.28);
+  color: #fffdf8;
+  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.14);
+  animation: breatheButton 2.8s ease-in-out infinite;
+}
+
+.welcome-start-button:active,
+.welcome-start-button.is-pressed {
+  transform: translateY(6px) scale(0.97);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.88) inset,
+    0 4px 0 rgba(42, 95, 132, 0.22),
+    0 12px 18px rgba(8, 18, 34, 0.24);
+}
+
+.welcome-start-button::before {
+  content: "";
+  position: absolute;
+  inset: 8px 16px auto 16px;
+  height: 42%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74), transparent 88%);
+  pointer-events: none;
+}
+
+.welcome-start-button__icon {
+  position: relative;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.84);
+  background:
+    radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.94), transparent 28%),
+    linear-gradient(180deg, #9dff4c, #44c20d 58%, #27a30a);
+  box-shadow: 0 8px 14px rgba(8, 18, 34, 0.24);
+}
+
+.welcome-start-button__icon::before {
+  content: "";
+  position: absolute;
+  left: 21px;
+  top: 15px;
+  border-left: 16px solid #fffef8;
+  border-top: 11px solid transparent;
+  border-bottom: 11px solid transparent;
+}
+
+.welcome-start-button__label {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+  text-align: left;
+}
+
+.welcome-start-button__label strong {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+}
+
+.welcome-start-button__label small {
+  font-size: 0.92rem;
+  font-weight: 800;
+  opacity: 0.92;
+}
+
+@media (max-width: 1180px) {
+  .scene--welcome .name-badge__stamp {
+    width: min(22vw, 150px);
+  }
+
+  .ocean-welcome__fish--a {
+    width: min(22vw, 180px);
+  }
+
+  .ocean-welcome__fish--b,
+  .ocean-welcome__fish--c {
+    width: min(18vw, 150px);
+  }
+
+  .ocean-welcome__title-chip {
+    margin-top: 1.2vh;
+  }
+
+  .welcome-start-button {
+    min-width: min(50vw, 300px);
+    padding: 16px 24px;
+  }
+}

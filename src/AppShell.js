@@ -215,7 +215,7 @@ export class AppShell {
     const showFullscreenPrompt =
       canUseFullscreen() &&
       !isFullscreenActive() &&
-      (scene === SCENES.WELCOME || scene === SCENES.THEME_SELECT || scene === SCENES.RESULT);
+      scene === SCENES.RESULT;
     this.fullscreenPrompt.update(showFullscreenPrompt);
   }
 
