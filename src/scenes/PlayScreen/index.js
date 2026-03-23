@@ -26,6 +26,10 @@ function distanceBetween(a, b) {
   return Math.hypot(dx, dy);
 }
 
+function getVisualFacingFromMotion(motionX) {
+  return motionX >= 0 ? -1 : 1;
+}
+
 function getEntityWidth(stage, isBoss) {
   if (isBoss) {
     return stage.clientWidth > 1100 ? 900 : 690;
@@ -89,19 +93,35 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
     }
   } else {
     const laneCount = isBoss ? 3 : 5;
+    const entries = [
+      { side: "left", vertical: "mid" },
+      { side: "right", vertical: "mid" },
+      { side: "left", vertical: "upper" },
+      { side: "right", vertical: "upper" },
+      { side: "left", vertical: "lower" },
+      { side: "right", vertical: "lower" }
+    ];
 
     for (let attempt = 0; attempt < 40; attempt += 1) {
-      const side = Math.random() < 0.5 ? "left" : "right";
+      const entry = entries[Math.floor(Math.random() * entries.length)];
       const laneIndex = Math.floor(Math.random() * laneCount);
       const laneY = laneCenter(bounds, laneCount, laneIndex);
       const offsetY = randomBetween(-26, 26);
-      const sideLeft = side === "left";
+      const sideLeft = entry.side === "left";
       const x = sideLeft ? -margin : stage.clientWidth + margin;
-      const y = clamp(laneY + offsetY, bounds.minY + 18, bounds.maxY - 18);
+      let y = clamp(laneY + offsetY, bounds.minY + 18, bounds.maxY - 18);
       const targetX = sideLeft
         ? randomBetween(bounds.minX + 120, bounds.maxX - 28)
         : randomBetween(bounds.minX + 28, bounds.maxX - 120);
-      const targetY = clamp(laneY + randomBetween(-36, 36), bounds.minY + 16, bounds.maxY - 16);
+      let targetY = clamp(laneY + randomBetween(-36, 36), bounds.minY + 16, bounds.maxY - 16);
+
+      if (entry.vertical === "upper") {
+        y = bounds.minY - margin * 0.24;
+        targetY = clamp(laneY + randomBetween(34, 86), bounds.minY + 26, bounds.maxY - 24);
+      } else if (entry.vertical === "lower") {
+        y = bounds.maxY + margin * 0.18;
+        targetY = clamp(laneY - randomBetween(34, 86), bounds.minY + 24, bounds.maxY - 26);
+      }
 
       const candidate = { x, y, width: entityWidth };
       const waypoint = { x: targetX, y: targetY, width: entityWidth };
@@ -161,7 +181,7 @@ function chooseInteriorWaypoint(stage, entityWidth, entities, isBoss, themeId, b
 
 function setExitWaypoint(entity, host, themeId) {
   const margin = entity.width * 0.85;
-  const leavingRight = entity.facing >= 0;
+  const leavingRight = (entity.vx || entity.targetX - entity.x) >= 0;
   entity.exiting = true;
   entity.targetX = leavingRight ? host.clientWidth + margin : -margin;
   entity.targetY = themeId === "train"
@@ -187,7 +207,8 @@ function createEntity(objectData, stage, entities, isBoss, isTarget, themeId) {
   const speed = themeId === "train"
     ? (isBoss ? randomBetween(70, 92) : randomBetween(58, 78))
     : (isBoss ? randomBetween(54, 70) : randomBetween(40, 60));
-  const facing = course.targetX >= course.x ? 1 : -1;
+  const travelDirection = course.targetX >= course.x ? 1 : -1;
+  const facing = getVisualFacingFromMotion(travelDirection);
 
   return {
     data: objectData,
@@ -200,6 +221,7 @@ function createEntity(objectData, stage, entities, isBoss, isTarget, themeId) {
     vx: 0,
     vy: 0,
     facing,
+    travelDirection,
     width,
     baseRotation: themeId === "train" ? randomBetween(-1.5, 1.5) : randomBetween(-4, 4),
     wavePhase: randomBetween(0, Math.PI * 2),
@@ -551,7 +573,8 @@ export function createPlayScreen({
     entity.y = clamp(entity.y, bounds.minY - entity.width * 0.4, bounds.maxY + entity.width * 0.4);
 
     if (Math.abs(entity.vx) > 2) {
-      entity.facing = entity.vx > 0 ? 1 : -1;
+      entity.travelDirection = entity.vx > 0 ? 1 : -1;
+      entity.facing = getVisualFacingFromMotion(entity.vx);
     }
 
     const bank = theme.id === "train"
