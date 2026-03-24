@@ -44,7 +44,7 @@ function getMovementBounds(host, entityWidth, themeId = "ocean") {
   const maxX = host.clientWidth - entityWidth * 0.52 - 34;
   const minY = themeId === "train"
     ? Math.max(150, entityWidth * 0.2 + 74)
-    : Math.max(166, entityWidth * 0.2 + 84);
+    : Math.max(220, entityWidth * 0.2 + 118);
   const maxY = themeId === "train"
     ? host.clientHeight - entityWidth * 0.22 - 26
     : host.clientHeight - entityWidth * 0.2 - 34;
@@ -92,42 +92,16 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
       }
     }
   } else {
-    const laneCount = isBoss ? 3 : 5;
-    const entries = [
-      { origin: "right", vertical: "upper" },
-      { origin: "right", vertical: "mid" },
-      { origin: "right", vertical: "lower" },
-      { origin: "top", vertical: "center" },
-      { origin: "bottom", vertical: "center" }
-    ];
+    const laneCount = isBoss ? 2 : 3;
 
     for (let attempt = 0; attempt < 40; attempt += 1) {
-      const entry = entries[Math.floor(Math.random() * entries.length)];
       const laneIndex = Math.floor(Math.random() * laneCount);
       const laneY = laneCenter(bounds, laneCount, laneIndex);
       const offsetY = randomBetween(-26, 26);
       let x = stage.clientWidth + margin;
-      let y = clamp(laneY + offsetY, bounds.minY + 18, bounds.maxY - 18);
+      let y = clamp(laneY + offsetY, bounds.minY + 12, bounds.maxY - 12);
       let targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
-      let targetY = clamp(laneY + randomBetween(-36, 36), bounds.minY + 16, bounds.maxY - 16);
-
-      if (entry.origin === "right" && entry.vertical === "upper") {
-        y = bounds.minY + randomBetween(12, 64);
-        targetY = clamp(laneY + randomBetween(34, 86), bounds.minY + 26, bounds.maxY - 24);
-      } else if (entry.origin === "right" && entry.vertical === "lower") {
-        y = bounds.maxY - randomBetween(12, 64);
-        targetY = clamp(laneY - randomBetween(34, 86), bounds.minY + 24, bounds.maxY - 26);
-      } else if (entry.origin === "top") {
-        x = randomBetween(bounds.minX + 80, bounds.maxX - 80);
-        y = bounds.minY - margin * 0.22;
-        targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
-        targetY = clamp(laneY + randomBetween(34, 86), bounds.minY + 26, bounds.maxY - 24);
-      } else if (entry.origin === "bottom") {
-        x = randomBetween(bounds.minX + 80, bounds.maxX - 80);
-        y = bounds.maxY + margin * 0.18;
-        targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
-        targetY = clamp(laneY - randomBetween(34, 86), bounds.minY + 24, bounds.maxY - 26);
-      }
+      let targetY = clamp(laneY + randomBetween(-30, 30), bounds.minY + 12, bounds.maxY - 12);
 
       const candidate = { x, y, width: entityWidth };
       const waypoint = { x: targetX, y: targetY, width: entityWidth };
