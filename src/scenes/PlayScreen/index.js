@@ -20,6 +20,15 @@ function randomBetween(min, max) {
   return min + Math.random() * (max - min);
 }
 
+function shuffle(list) {
+  const next = [...list];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
+}
+
 function distanceBetween(a, b) {
   const dx = a.x - b.x;
   const dy = a.y - b.y;
@@ -30,202 +39,108 @@ function getVisualFacingFromMotion(motionX) {
   return motionX >= 0 ? -1 : 1;
 }
 
-function getEntityWidth(stage, isBoss) {
+function getEntityWidth(stage, isBoss, themeId) {
   if (isBoss) {
-    return stage.clientWidth > 1100 ? 900 : 690;
+    return stage.clientWidth > 1100 ? 720 : 560;
   }
-  return stage.clientWidth > 1100 ? 240 : 195;
-}
-
-function getMovementBounds(host, entityWidth, themeId = "ocean") {
-  const minX = themeId === "train"
-    ? Math.max(host.clientWidth * 0.36, entityWidth * 0.52 + 18)
-    : Math.max(host.clientWidth * 0.38, entityWidth * 0.52 + 24);
-  const maxX = host.clientWidth - entityWidth * 0.52 - 34;
-  const minY = themeId === "train"
-    ? Math.max(host.clientHeight * 0.32, entityWidth * 0.2 + 96)
-    : Math.max(host.clientHeight * 0.4, entityWidth * 0.2 + 152);
-  const maxY = themeId === "train"
-    ? host.clientHeight - entityWidth * 0.22 - 26
-    : host.clientHeight - entityWidth * 0.2 - 34;
-
-  return { minX, maxX, minY, maxY };
-}
-
-function laneCenter(bounds, laneCount, laneIndex) {
-  const laneHeight = (bounds.maxY - bounds.minY) / laneCount;
-  return bounds.minY + laneHeight * laneIndex + laneHeight * 0.5;
-}
-
-function overlapsAtPoint(candidate, entities, gapScale = 0.88) {
-  return entities.some((entity) => {
-    if (entity.cleared) {
-      return false;
-    }
-    const minDistance = (candidate.width + entity.width) * gapScale * 0.5;
-    return distanceBetween(candidate, entity) < minDistance;
-  });
-}
-
-function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
-  const bounds = getMovementBounds(stage, entityWidth, themeId);
-  const margin = entityWidth * 0.72;
-
   if (themeId === "train") {
-    const laneCount = isBoss ? 2 : 3;
-
-    for (let attempt = 0; attempt < 32; attempt += 1) {
-      const side = "right";
-      const laneIndex = Math.floor(Math.random() * laneCount);
-      const laneY = laneCenter(bounds, laneCount, laneIndex);
-      const y = clamp(laneY + randomBetween(-20, 20), bounds.minY + 8, bounds.maxY - 8);
-      const targetY = clamp(laneY + randomBetween(-18, 18), bounds.minY + 8, bounds.maxY - 8);
-      const x = side === "left" ? -margin : stage.clientWidth + margin;
-      const targetX = side === "left"
-        ? randomBetween(bounds.minX + 120, bounds.maxX - 24)
-        : randomBetween(bounds.minX + 24, bounds.maxX - 120);
-      const candidate = { x, y, width: entityWidth };
-      const waypoint = { x: targetX, y: targetY, width: entityWidth };
-
-      if (!overlapsAtPoint(candidate, entities, 1.02) && !overlapsAtPoint(waypoint, entities, 0.88)) {
-        return { x, y, targetX, targetY, bounds, bandY: laneY };
-      }
-    }
-  } else {
-    const laneCount = isBoss ? 2 : 3;
-
-    for (let attempt = 0; attempt < 40; attempt += 1) {
-      const laneIndex = Math.floor(Math.random() * laneCount);
-      const laneY = laneCenter(bounds, laneCount, laneIndex);
-      const offsetY = randomBetween(-26, 26);
-      let x = stage.clientWidth + margin;
-      let y = clamp(laneY + offsetY, bounds.minY + 12, bounds.maxY - 12);
-      let targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
-      let targetY = clamp(laneY + randomBetween(-30, 30), bounds.minY + 12, bounds.maxY - 12);
-
-      const candidate = { x, y, width: entityWidth };
-      const waypoint = { x: targetX, y: targetY, width: entityWidth };
-
-      if (!overlapsAtPoint(candidate, entities, 1.08) && !overlapsAtPoint(waypoint, entities, 0.94)) {
-        return { x, y, targetX, targetY, bounds, bandY: laneY };
-      }
-    }
+    return stage.clientWidth > 1100 ? 196 : 164;
   }
+  return stage.clientWidth > 1100 ? 182 : 150;
+}
 
-  if (themeId === "train") {
-    return {
-      x: stage.clientWidth + entityWidth * 0.72,
-      y: (bounds.minY + bounds.maxY) * 0.5,
-      targetX: bounds.maxX - entityWidth * 0.18,
-      targetY: (bounds.minY + bounds.maxY) * 0.5,
-      bounds,
-      bandY: (bounds.minY + bounds.maxY) * 0.5
-    };
-  }
+function getPlayBounds(host, entityWidth, themeId) {
+  const safeLeft = Math.max(host.clientWidth * 0.26, entityWidth * 0.54 + 24);
+  const safeRight = host.clientWidth - entityWidth * 0.54 - 28;
+  const safeTop = themeId === "train"
+    ? Math.max(168, entityWidth * 0.24 + 84)
+    : Math.max(178, entityWidth * 0.24 + 92);
+  const safeBottom = host.clientHeight - entityWidth * 0.24 - 26;
 
   return {
-    x: stage.clientWidth + entityWidth * 0.72,
-    y: clamp((bounds.minY + bounds.maxY) * 0.52, bounds.minY + 24, bounds.maxY - 24),
-    targetX: randomBetween(bounds.minX + 60, bounds.maxX - 60),
-    targetY: clamp((bounds.minY + bounds.maxY) * 0.54, bounds.minY + 30, bounds.maxY - 30),
-    bounds,
-    bandY: (bounds.minY + bounds.maxY) * 0.54
+    minX: safeLeft,
+    maxX: safeRight,
+    minY: safeTop,
+    maxY: safeBottom
   };
 }
 
-function chooseInteriorWaypoint(stage, entityWidth, entities, isBoss, themeId, bandY) {
-  const bounds = getMovementBounds(stage, entityWidth, themeId);
+function buildSpreadSlots(host, entityWidth, themeId, isBoss) {
+  const bounds = getPlayBounds(host, entityWidth, themeId);
 
-  if (themeId === "train") {
-    for (let attempt = 0; attempt < 20; attempt += 1) {
-      const candidate = {
-        x: randomBetween(bounds.minX + 40, bounds.maxX - 40),
-        y: clamp((bandY ?? (bounds.minY + bounds.maxY) * 0.5) + randomBetween(-22, 22), bounds.minY + 8, bounds.maxY - 8),
-        width: entityWidth
-      };
-      if (!overlapsAtPoint(candidate, entities, 0.78)) {
-        return candidate;
-      }
+  if (isBoss) {
+    return [{
+      x: clamp((bounds.minX + bounds.maxX) * 0.58, bounds.minX, bounds.maxX),
+      y: clamp((bounds.minY + bounds.maxY) * 0.56, bounds.minY, bounds.maxY)
+    }];
+  }
+
+  const cols = host.clientWidth > 900 ? 3 : 2;
+  const rows = host.clientHeight > 620 ? 3 : 2;
+  const slots = [];
+  const stepX = cols === 1 ? 0 : (bounds.maxX - bounds.minX) / (cols - 1);
+  const stepY = rows === 1 ? 0 : (bounds.maxY - bounds.minY) / (rows - 1);
+
+  for (let row = 0; row < rows; row += 1) {
+    for (let col = 0; col < cols; col += 1) {
+      const x = bounds.minX + stepX * col;
+      const y = bounds.minY + stepY * row;
+      slots.push({
+        x: clamp(x + randomBetween(-26, 26), bounds.minX, bounds.maxX),
+        y: clamp(y + randomBetween(-22, 22), bounds.minY, bounds.maxY)
+      });
     }
   }
 
-  for (let attempt = 0; attempt < 28; attempt += 1) {
-    const candidate = {
-      x: randomBetween(bounds.minX + 24, bounds.maxX - 24),
-      y: themeId === "train"
-        ? clamp((bandY ?? (bounds.minY + bounds.maxY) * 0.5) + randomBetween(-24, 24), bounds.minY + 10, bounds.maxY - 10)
-        : randomBetween(bounds.minY + 22, bounds.maxY - 22),
-      width: entityWidth
-    };
-    if (!overlapsAtPoint(candidate, entities, themeId === "train" ? (isBoss ? 0.74 : 0.82) : (isBoss ? 0.82 : 0.9))) {
-      return candidate;
-    }
-  }
+  return shuffle(slots);
+}
 
+function createEntryPosition(stage, slot, entityWidth, order) {
   return {
-    x: randomBetween(bounds.minX + 32, bounds.maxX - 32),
-    y: themeId === "train"
-      ? clamp((bandY ?? (bounds.minY + bounds.maxY) * 0.5) + randomBetween(-18, 18), bounds.minY + 8, bounds.maxY - 8)
-      : randomBetween(bounds.minY + 24, bounds.maxY - 24)
+    x: stage.clientWidth + entityWidth * (0.78 + order * 0.24),
+    y: clamp(slot.y + randomBetween(-34, 34), 120, stage.clientHeight - 80)
   };
 }
 
-function setExitWaypoint(entity, host, themeId) {
-  const margin = entity.width * 0.85;
-  const leavingRight = (entity.vx || entity.targetX - entity.x) >= 0;
-  entity.exiting = true;
-  entity.targetX = leavingRight ? host.clientWidth + margin : -margin;
-  entity.targetY = themeId === "train"
-    ? clamp(
-        (entity.bandY ?? entity.y) + randomBetween(-18, 18),
-        entity.width * 0.2 + 70,
-        host.clientHeight - entity.width * 0.2 - 24
-      )
-    : clamp(
-        entity.y + randomBetween(-42, 42),
-        entity.width * 0.2 + 84,
-        host.clientHeight - entity.width * 0.2 - 34
-      );
-}
-
-function createEntity(objectData, stage, entities, isBoss, isTarget, themeId) {
+function createEntity({
+  objectData,
+  stage,
+  slot,
+  order,
+  isBoss,
+  isTarget,
+  themeId
+}) {
   const component = createDragObject({ data: objectData, isBoss, isTarget });
-  const width = getEntityWidth(stage, isBoss);
+  const width = getEntityWidth(stage, isBoss, themeId);
+  const start = createEntryPosition(stage, slot, width, order);
   component.element.style.width = `${width}px`;
   stage.append(component.element);
-
-  const course = pickSpawnCourse(stage, width, entities, isBoss, themeId);
-  const speed = themeId === "train"
-    ? (isBoss ? randomBetween(70, 92) : randomBetween(58, 78))
-    : (isBoss ? randomBetween(54, 70) : randomBetween(40, 60));
-  const travelDirection = course.targetX >= course.x ? 1 : -1;
-  const facing = getVisualFacingFromMotion(travelDirection);
 
   return {
     data: objectData,
     component,
-    x: course.x,
-    y: course.y,
-    targetX: course.targetX,
-    targetY: course.targetY,
-    bandY: course.bandY,
+    x: start.x,
+    y: start.y,
+    anchorX: slot.x,
+    anchorY: slot.y,
+    targetX: slot.x,
+    targetY: slot.y,
+    width,
+    facing: -1,
     vx: 0,
     vy: 0,
-    facing,
-    travelDirection,
-    width,
-    baseRotation: themeId === "train" ? randomBetween(-1.5, 1.5) : randomBetween(-4, 4),
-    wavePhase: randomBetween(0, Math.PI * 2),
-    waveRate: randomBetween(0.8, 1.35),
-    waveStrength: themeId === "train"
-      ? (isBoss ? randomBetween(4, 8) : randomBetween(6, 10))
-      : (isBoss ? randomBetween(10, 18) : randomBetween(14, 24)),
-    speed,
+    entryDelayMs: order * 120,
+    speed: isBoss
+      ? (themeId === "train" ? 120 : 104)
+      : (themeId === "train" ? 102 : 88),
+    driftRadiusX: isBoss ? 24 : randomBetween(18, 34),
+    driftRadiusY: isBoss ? 18 : randomBetween(12, 28),
+    driftPhase: randomBetween(0, Math.PI * 2),
+    driftRate: randomBetween(0.7, 1.15),
+    baseRotation: themeId === "train" ? randomBetween(-1.4, 1.4) : randomBetween(-4, 4),
     dragging: false,
-    cleared: false,
-    exiting: false,
-    lifeMs: 0,
-    maxLifeMs: isBoss ? Number.POSITIVE_INFINITY : isTarget ? randomBetween(18000, 26000) : randomBetween(11000, 18000)
+    cleared: false
   };
 }
 
@@ -278,13 +193,11 @@ export function createPlayScreen({
   let spawnTimerId = null;
   let destroyed = false;
   let resolved = false;
-  let lastTimestamp = performance.now();
-  let lastCountdownVoiceAt = null;
   let activeDrag = null;
-  const maxObjects = isBoss ? 1 : 5;
+  let lastCountdownVoiceAt = null;
+  let lastTimestamp = performance.now();
   const initialWaveSize = isBoss ? 1 : 5;
   const recurringWaveSize = isBoss ? 1 : 3;
-  const waveIntervalMs = 5000;
   const entities = [];
 
   restartButton?.addEventListener("click", () => {
@@ -322,7 +235,7 @@ export function createPlayScreen({
     const objectY = objectRect.top + objectRect.height / 2;
     const dx = objectX - zoneX;
     const dy = objectY - zoneY;
-    const length = Math.sqrt(dx * dx + dy * dy);
+    const length = Math.hypot(dx, dy);
     const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
     trail.classList.add("is-visible");
@@ -332,8 +245,8 @@ export function createPlayScreen({
     trail.style.transform = `rotate(${angle}deg)`;
   }
 
-  function markEntityVisual(entity, extraRotation = 0) {
-    const sway = Math.sin(performance.now() / 760 * entity.waveRate + entity.wavePhase) * 1.6;
+  function setEntityVisual(entity, extraRotation = 0) {
+    const sway = Math.sin(performance.now() / 780 * entity.driftRate + entity.driftPhase) * 1.4;
     entity.component.setPosition(
       entity.x,
       entity.y,
@@ -350,61 +263,7 @@ export function createPlayScreen({
     entity.component.element.remove();
   }
 
-  function countVisibleTargets() {
-    return entities.filter((entity) => !entity.cleared && entity.data.id === target.id).length;
-  }
-
-  function spawn(forceTarget = false, distractorOnly = false) {
-    if (destroyed || resolved || entities.length >= maxObjects) {
-      return;
-    }
-
-    const distractors = theme.objects.filter((object) => object.id !== target.id);
-    const objectData = forceTarget || isBoss
-      ? target
-      : distractorOnly
-        ? distractors[Math.floor(Math.random() * distractors.length)]
-        : (Math.random() < 0.18 ? target : distractors[Math.floor(Math.random() * distractors.length)]);
-
-    const entity = createEntity(
-      objectData,
-      stage,
-      entities,
-      isBoss && objectData.id === target.id,
-      objectData.id === target.id,
-      theme.id
-    );
-    entities.push(entity);
-    markEntityVisual(entity);
-
-    entity.component.element.addEventListener("pointerdown", (event) => {
-      if (resolved) {
-        return;
-      }
-
-      if (entity.data.id !== target.id) {
-        entity.component.shake();
-        audioManager.playSfx("error", 0.35);
-        return;
-      }
-
-      entity.dragging = true;
-      entity.component.setSelected(true);
-      activeDrag = {
-        entity,
-        pointerId: event.pointerId,
-        lastX: event.clientX,
-        lastY: event.clientY,
-        lastTime: performance.now()
-      };
-      event.preventDefault();
-    });
-  }
-
   function clearWave() {
-    if (activeDrag) {
-      return;
-    }
     entities.slice().forEach((entity) => {
       if (!entity.dragging && !entity.cleared) {
         removeEntity(entity);
@@ -412,17 +271,65 @@ export function createPlayScreen({
     });
   }
 
-  function spawnBatch(size) {
+  function buildWaveObjects(size) {
+    const distractors = theme.objects.filter((object) => object.id !== target.id);
+    const wave = [target];
+    for (let i = 1; i < size; i += 1) {
+      wave.push(distractors[Math.floor(Math.random() * distractors.length)]);
+    }
+    return shuffle(wave);
+  }
+
+  function spawnWave(size) {
     if (destroyed || resolved) {
       return;
     }
 
-    for (let i = 0; i < size; i += 1) {
-      spawn(i === 0, i !== 0);
-    }
+    const width = getEntityWidth(stage, isBoss, theme.id);
+    const slots = buildSpreadSlots(stage, width, theme.id, isBoss).slice(0, size);
+    const waveObjects = buildWaveObjects(size);
+
+    slots.forEach((slot, index) => {
+      const objectData = waveObjects[index];
+      const entity = createEntity({
+        objectData,
+        stage,
+        slot,
+        order: index,
+        isBoss: isBoss && objectData.id === target.id,
+        isTarget: objectData.id === target.id,
+        themeId: theme.id
+      });
+
+      entities.push(entity);
+      setEntityVisual(entity);
+
+      entity.component.element.addEventListener("pointerdown", (event) => {
+        if (resolved) {
+          return;
+        }
+
+        if (entity.data.id !== target.id) {
+          entity.component.shake();
+          audioManager.playSfx("error", 0.35);
+          return;
+        }
+
+        entity.dragging = true;
+        entity.component.setSelected(true);
+        activeDrag = {
+          entity,
+          pointerId: event.pointerId,
+          lastX: event.clientX,
+          lastY: event.clientY,
+          lastTime: performance.now()
+        };
+        event.preventDefault();
+      });
+    });
   }
 
-  function scheduleSpawn(nextSize = recurringWaveSize) {
+  function scheduleWave(size = recurringWaveSize) {
     if (destroyed || resolved) {
       return;
     }
@@ -432,39 +339,19 @@ export function createPlayScreen({
         return;
       }
       if (activeDrag) {
-        scheduleSpawn(nextSize);
+        scheduleWave(size);
         return;
       }
       clearWave();
-      spawnBatch(nextSize);
-      scheduleSpawn(recurringWaveSize);
-    }, waveIntervalMs);
-  }
-
-  function startRoundSuccessFlow() {
-    resolved = true;
-    praise.show(getPraiseMessage());
-    audioManager.playSfx("success", 0.52);
-    audioManager.speak(getVoicePraiseMessage(), { pitch: 1.18, rate: 1 });
+      spawnWave(size);
+      scheduleWave(recurringWaveSize);
+    }, 5000);
   }
 
   function clearTimers() {
     window.clearTimeout(spawnTimerId);
     window.clearInterval(intervalId);
     window.cancelAnimationFrame(animationId);
-  }
-
-  async function finishRoundSuccess() {
-    startRoundSuccessFlow();
-    await wait(850);
-    if (destroyed) {
-      return;
-    }
-    if (isBoss) {
-      onBossWin?.();
-      return;
-    }
-    onRoundWin?.(target);
   }
 
   function finishTimeout() {
@@ -480,12 +367,32 @@ export function createPlayScreen({
     onRoundTimeout?.();
   }
 
+  function startRoundSuccessFlow() {
+    resolved = true;
+    praise.show(getPraiseMessage());
+    audioManager.playSfx("success", 0.52);
+    audioManager.speak(getVoicePraiseMessage(), { pitch: 1.18, rate: 1 });
+  }
+
+  async function finishRoundSuccess() {
+    startRoundSuccessFlow();
+    await wait(850);
+    if (destroyed) {
+      return;
+    }
+    if (isBoss) {
+      onBossWin?.();
+      return;
+    }
+    onRoundWin?.(target);
+  }
+
   function breakDrag(entity) {
     entity.dragging = false;
     entity.component.setSelected(false);
     entity.component.snap();
-    entity.targetX = clamp(entity.x + randomBetween(-120, 120), entity.width * 0.5 + 20, element.clientWidth - entity.width * 0.5 - 20);
-    entity.targetY = clamp(entity.y + randomBetween(-90, 90), 140, element.clientHeight - entity.width * 0.22 - 18);
+    entity.targetX = entity.anchorX;
+    entity.targetY = entity.anchorY;
     activeDrag = null;
     zone.highlight(false);
     syncTrail(null);
@@ -512,9 +419,8 @@ export function createPlayScreen({
       return;
     }
 
-    const bounds = getMovementBounds(element, entity.width, theme.id);
-    entity.targetX = clamp(entity.x + randomBetween(-180, 180), bounds.minX, bounds.maxX);
-    entity.targetY = clamp(entity.y + randomBetween(-120, 120), bounds.minY, bounds.maxY);
+    entity.targetX = entity.anchorX;
+    entity.targetY = entity.anchorY;
   }
 
   function handlePointerMove(event) {
@@ -540,67 +446,59 @@ export function createPlayScreen({
     entity.y = clamp(event.clientY - rect.top, entity.width * 0.2 + 70, rect.height - entity.width * 0.22);
     zone.highlight(zone.containsPoint(event.clientX, event.clientY));
     syncTrail(entity);
-    markEntityVisual(entity, 0);
+    setEntityVisual(entity, 0);
   }
 
   function steerEntity(entity, deltaSeconds, timestamp) {
-    const bounds = getMovementBounds(element, entity.width, theme.id);
-    const dx = entity.targetX - entity.x;
-    const dy = entity.targetY - entity.y;
-    const distance = Math.hypot(dx, dy) || 1;
+    const bounds = getPlayBounds(element, entity.width, theme.id);
 
-    if (!entity.exiting && distance < Math.max(34, entity.width * 0.12)) {
-      const nextWaypoint = chooseInteriorWaypoint(
-        stage,
-        entity.width,
-        entities.filter((candidate) => candidate !== entity),
-        isBoss,
-        theme.id,
-        entity.bandY
-      );
-      entity.targetX = nextWaypoint.x;
-      entity.targetY = nextWaypoint.y;
+    if (entity.entryDelayMs > 0) {
+      entity.entryDelayMs = Math.max(0, entity.entryDelayMs - deltaSeconds * 1000);
+      return;
     }
 
-    const directionX = dx / distance;
-    const directionY = dy / distance;
+    const floatX = Math.cos(timestamp / 1000 * entity.driftRate + entity.driftPhase) * entity.driftRadiusX;
+    const floatY = Math.sin(timestamp / 1100 * entity.driftRate + entity.driftPhase) * entity.driftRadiusY;
+    const desiredX = clamp(entity.targetX + floatX, bounds.minX, bounds.maxX);
+    const desiredY = clamp(entity.targetY + floatY, bounds.minY, bounds.maxY);
+    const dx = desiredX - entity.x;
+    const dy = desiredY - entity.y;
+    const distance = Math.hypot(dx, dy) || 1;
 
     let avoidX = 0;
     let avoidY = 0;
     entities.forEach((other) => {
-      if (other === entity || other.dragging || other.cleared) {
+      if (other === entity || other.dragging || other.cleared || other.entryDelayMs > 0) {
         return;
       }
-      const safeDistance = (entity.width + other.width) * 0.48;
+
+      const safeDistance = (entity.width + other.width) * 0.58;
       const localDx = entity.x - other.x;
       const localDy = entity.y - other.y;
       const localDistance = Math.hypot(localDx, localDy) || 1;
+
       if (localDistance < safeDistance) {
         const pressure = (safeDistance - localDistance) / safeDistance;
-        avoidX += (localDx / localDistance) * pressure * 64;
-        avoidY += (localDy / localDistance) * pressure * 42;
+        avoidX += (localDx / localDistance) * pressure * 54;
+        avoidY += (localDy / localDistance) * pressure * 36;
       }
     });
 
-    const waveX = Math.cos(timestamp / 1000 * entity.waveRate + entity.wavePhase) * entity.waveStrength * (theme.id === "train" ? 0.03 : 0.08);
-    const waveY = Math.sin(timestamp / 1000 * entity.waveRate + entity.wavePhase) * entity.waveStrength * (theme.id === "train" ? 0.08 : 0.22);
-
-    entity.vx = directionX * entity.speed + avoidX + waveX;
-    entity.vy = directionY * entity.speed + avoidY + waveY;
+    entity.vx = dx / distance * entity.speed + avoidX;
+    entity.vy = dy / distance * entity.speed + avoidY;
     entity.x += entity.vx * deltaSeconds;
     entity.y += entity.vy * deltaSeconds;
-    entity.x = clamp(entity.x, bounds.minX - entity.width * 0.72, bounds.maxX + entity.width * 0.72);
-    entity.y = clamp(entity.y, bounds.minY - entity.width * 0.4, bounds.maxY + entity.width * 0.4);
+    entity.x = clamp(entity.x, bounds.minX - entity.width * 0.72, element.clientWidth + entity.width * 0.82);
+    entity.y = clamp(entity.y, bounds.minY - entity.width * 0.2, bounds.maxY + entity.width * 0.2);
 
-    if (Math.abs(entity.vx) > 2) {
-      entity.travelDirection = entity.vx > 0 ? 1 : -1;
+    if (Math.abs(entity.vx) > 1.2) {
       entity.facing = getVisualFacingFromMotion(entity.vx);
     }
 
     const bank = theme.id === "train"
       ? clamp(entity.vy * 0.03, -4, 4)
-      : clamp(entity.vy * 0.08 + Math.sin(timestamp / 720 + entity.wavePhase) * 1.8, -12, 12);
-    markEntityVisual(entity, bank);
+      : clamp(entity.vy * 0.07, -10, 10);
+    setEntityVisual(entity, bank);
   }
 
   function tick(timestamp) {
@@ -611,43 +509,19 @@ export function createPlayScreen({
     const deltaSeconds = (timestamp - lastTimestamp) / 1000;
     lastTimestamp = timestamp;
 
-    entities.slice().forEach((entity) => {
-      if (entity.cleared) {
+    entities.forEach((entity) => {
+      if (entity.cleared || entity.dragging) {
         return;
       }
-
-      if (!entity.dragging) {
-        entity.lifeMs += deltaSeconds * 1000;
-        if (!isBoss && !entity.exiting && entity.lifeMs > entity.maxLifeMs) {
-          const targetCount = countVisibleTargets();
-          const canExitTarget = entity.data.id !== target.id || targetCount > 1;
-          if (canExitTarget) {
-            setExitWaypoint(entity, element, theme.id);
-          }
-        }
-
-        steerEntity(entity, deltaSeconds, timestamp);
-      }
-
-      if (
-        entity.exiting &&
-        (
-          entity.x < -entity.width * 1.15 ||
-          entity.x > element.clientWidth + entity.width * 1.15 ||
-          entity.y < -entity.width * 0.9 ||
-          entity.y > element.clientHeight + entity.width * 0.9
-        )
-      ) {
-        removeEntity(entity);
-      }
+      steerEntity(entity, deltaSeconds, timestamp);
     });
 
     animationId = window.requestAnimationFrame(tick);
   }
 
   updateHud();
-  spawnBatch(initialWaveSize);
-  scheduleSpawn();
+  spawnWave(initialWaveSize);
+  scheduleWave();
   animationId = window.requestAnimationFrame(tick);
 
   intervalId = window.setInterval(() => {

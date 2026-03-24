@@ -739,8 +739,8 @@ h4,
   transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%)) rotate(var(--rotate, 0deg));
   transition:
     filter var(--transition-fast),
-    transform var(--transition-fast),
     opacity var(--transition-fast);
+  will-change: transform;
   z-index: 2;
 }
 
