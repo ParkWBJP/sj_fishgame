@@ -1,6 +1,10 @@
 export function createDragObject({ data, isBoss = false, isTarget = false }) {
   const element = document.createElement("button");
   element.type = "button";
+  element.dataset.objectId = data.id;
+  element.dataset.objectLabelKo = data.label.ko;
+  element.dataset.objectLabelJa = data.label.ja;
+  element.dataset.positioned = "false";
   element.className = [
     "drag-object",
     isBoss ? "drag-object--boss" : "",
@@ -16,10 +20,20 @@ export function createDragObject({ data, isBoss = false, isTarget = false }) {
   const api = {
     element,
     setPosition(x, y, rotation = 0, facing = 1) {
+      const hasValidPosition = Number.isFinite(x) && Number.isFinite(y);
+      element.dataset.positioned = hasValidPosition ? "true" : "false";
+      if (!hasValidPosition) {
+        element.style.setProperty("--x", "-9999px");
+        element.style.setProperty("--y", "-9999px");
+        element.style.setProperty("--rotate", `${rotation}deg`);
+        element.style.setProperty("--face", facing);
+        return false;
+      }
       element.style.setProperty("--x", `${x}px`);
       element.style.setProperty("--y", `${y}px`);
       element.style.setProperty("--rotate", `${rotation}deg`);
       element.style.setProperty("--face", facing);
+      return true;
     },
     setSelected(active) {
       element.classList.toggle("is-selected", active);

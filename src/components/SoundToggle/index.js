@@ -8,8 +8,8 @@ export function createSoundToggle(onToggle) {
     element: button,
     update(enabled) {
       button.innerHTML = enabled
-        ? `<span>🔊</span><span>\uc18c\ub9ac\u0020\u002f\u0020\u304a\u3068</span>`
-        : `<span>🔈</span><span>\uc18c\ub9ac\u0020\u002f\u0020\u304a\u3068</span>`;
+        ? `<span>&#128266;</span><span>소리 / おと</span>`
+        : `<span>&#128263;</span><span>소리 / おと</span>`;
       button.dataset.enabled = String(enabled);
     }
   };

@@ -1,0 +1,26 @@
+Original prompt: Figma 스킬 전제로 현재 태블릿용 어린이 웹게임을 웹페이지가 아니라 실제 키즈 아케이드 게임 오프닝 씬처럼 느껴지도록 재설계. 우선 웰컴 화면 톤을 가장 강하게 다시 잡고, 그 톤을 다른 화면으로 확장.
+
+- 2026-03-24: Figma MCP 리소스/템플릿이 현재 연결돼 있지 않고 Figma 링크도 제공되지 않아, 프롬프트를 시각 스펙으로 해석해 코드 레벨에서 웰컴/테마 선택 씬을 우선 재설계하기로 결정.
+- 2026-03-24: `WelcomeScreen`를 중앙 카드형 구조 대신 장면 중심 레이아웃으로 교체. 상단 선물 티켓, 우측 타이틀 군, 하단 스타트 도크/테마 토큰으로 재배치.
+- 2026-03-24: `ThemeSelectScreen`를 상단 설명 패널형 화면에서 두 개의 월드 게이트가 주인공인 구조로 재편. 게이트 아치/트랙/간결한 웨이파인더로 톤 통일.
+- 2026-03-24: `ResultScreen`, `SoundToggle`의 깨진 한일 문구를 정상화.
+- 2026-03-24: `npm run build` 통과.
+- 2026-03-24: Playwright로 웰컴/테마 선택 화면 캡처 확인. 기본 클라이언트 클릭은 버튼 애니메이션 안정화 대기에서 실패해, 테마 선택 검증은 DOM click 방식으로 보강.
+- 2026-03-24: Fixed the top-left spawn bug by delaying the first play-wave until the scene is mounted and the stage has non-zero bounds.
+- 2026-03-24: Drag objects now stay on a single left/top positioning model. Invalid coordinates never render, and CSS animation keyframes no longer recalculate position from `--x/--y`.
+- 2026-03-24: Spawn entry points now rotate across left/right/top/bottom/corner edges and recent spawn metadata is exposed through `window.render_game_to_text()`.
+- 2026-03-24: Added deterministic browser-test hooks (`window.render_game_to_text`, `window.advanceTime`) and a local `scripts/web_game_playwright_client.mjs` helper for this workspace.
+- 2026-03-24: Verified in-browser flow with Playwright: welcome -> theme select -> target intro -> play, wrong drag rejection, slow drag success, fast drag failure, 5 clears -> boss intro, boss clear, result screen, and zero console errors on the final run.
+- 2026-03-24: Rebuilt `WelcomeScreen` around a centered hero stack so the title/start button align cleanly, and moved decorative fish into a true background swim layer.
+- 2026-03-24: Reworked `ThemeSelectScreen` into two cleaner destination cards with simpler copy, fewer overlays, and clearer CTA hierarchy.
+- 2026-03-24: Reworked `PlayScreen` layout to remove the left rail, keep the net inside the main stage, and free more horizontal swim space.
+- 2026-03-24: Replaced anchor-jitter movement with roaming waypoints plus velocity smoothing so fish stay on screen, stop buzzing, and face the direction they move.
+- 2026-03-24: Removed the timed despawn cycle for normal fish; they now keep swimming for the round instead of disappearing after a few seconds.
+- 2026-03-24: Successful catches now animate into the net before fading, which fixes the abrupt vanish and makes the net feel connected to gameplay.
+- 2026-03-24: Boss visibility was restored by shrinking and centering the shark play-space/profile so the boss reliably appears and stays readable on screen.
+- 2026-03-24: Rebuilt `ResultScreen` with the restart action pinned at the top, clearer score emphasis, and a simpler caught-list panel.
+- 2026-03-24: After visual feedback on the welcome screen, replaced the centered meta-copy layout with an asymmetrical poster layout: left briefing rail + right launch gate, with shorter copy and a more deliberate focal point around the start button.
+- 2026-03-24: Verification on the refreshed build:
+  - `npm run build` passed after the UI/gameplay changes.
+  - Browser checks passed for welcome, theme select, normal play, boss play, and result screen screenshots.
+  - `node scripts/web_game_playwright_client.mjs --url http://127.0.0.1:4173 --click-selector ".welcome-start-button" --click 10,10 --iterations 1 --pause-ms 300 --screenshot-dir "output/playwright-verify"` produced a clean `theme-select` state snapshot without generating an error log.

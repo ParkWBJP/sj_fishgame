@@ -14,7 +14,7 @@ export function createScoreZone(themeId) {
     element,
     containsPoint(clientX, clientY) {
       const rect = element.getBoundingClientRect();
-      const padding = 34;
+      const padding = 48;
       return (
         clientX >= rect.left - padding &&
         clientX <= rect.right + padding &&

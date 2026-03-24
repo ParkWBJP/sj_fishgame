@@ -58,16 +58,19 @@ export class AppShell {
 
     this.soundToggle.update(this.gameState.getState().soundEnabled);
     this.renderScene();
+    this.installTestingHooks();
     this.syncAmbientAudio();
     this.syncShellState();
 
     this.gameState.subscribe(() => {
       this.soundToggle.update(this.gameState.getState().soundEnabled);
+      this.installTestingHooks();
       this.syncAmbientAudio();
       this.syncShellState();
     });
     this.sceneState.subscribe(() => {
       this.renderScene();
+      this.installTestingHooks();
       this.syncAmbientAudio();
       this.syncShellState();
     });
@@ -219,6 +222,40 @@ export class AppShell {
     this.fullscreenPrompt.update(showFullscreenPrompt);
   }
 
+  installTestingHooks() {
+    window.render_game_to_text = () => {
+      const scene = this.sceneState.getState().current;
+      const game = this.gameState.getState();
+      const sceneDebugState = this.currentScene?.getDebugState?.() ?? {};
+
+      return JSON.stringify({
+        scene,
+        themeId: game.themeId,
+        phase: game.phase,
+        roundIndex: game.roundIndex,
+        totalRounds: game.totalRounds,
+        caughtCount: game.caughtObjects.length,
+        targetId: game.currentTarget?.id ?? null,
+        bossTargetId: game.bossTarget?.id ?? null,
+        resultSuccess: game.result?.success ?? null,
+        sceneState: sceneDebugState,
+        coordinateSystem: {
+          origin: "top-left",
+          xDirection: "right",
+          yDirection: "down"
+        }
+      });
+    };
+
+    window.advanceTime = async (ms) => {
+      if (typeof this.currentScene?.advanceTime === "function") {
+        this.currentScene.advanceTime(ms);
+        return;
+      }
+      await wait(ms);
+    };
+  }
+
   renderScene() {
     this.currentScene?.destroy?.();
     this.sceneHost.innerHTML = "";
@@ -268,6 +305,7 @@ export class AppShell {
     }
 
     this.sceneHost.append(this.currentScene.element);
+    this.currentScene.afterMount?.();
     bindToyButtons(this.currentScene.element);
   }
 }
