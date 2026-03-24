@@ -43,8 +43,8 @@ function getMovementBounds(host, entityWidth, themeId = "ocean") {
     : Math.max(host.clientWidth * 0.38, entityWidth * 0.52 + 24);
   const maxX = host.clientWidth - entityWidth * 0.52 - 34;
   const minY = themeId === "train"
-    ? Math.max(150, entityWidth * 0.2 + 74)
-    : Math.max(220, entityWidth * 0.2 + 118);
+    ? Math.max(host.clientHeight * 0.32, entityWidth * 0.2 + 96)
+    : Math.max(host.clientHeight * 0.4, entityWidth * 0.2 + 152);
   const maxY = themeId === "train"
     ? host.clientHeight - entityWidth * 0.22 - 26
     : host.clientHeight - entityWidth * 0.2 - 34;
@@ -72,7 +72,7 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
   const margin = entityWidth * 0.72;
 
   if (themeId === "train") {
-    const laneCount = isBoss ? 2 : 4;
+    const laneCount = isBoss ? 2 : 3;
 
     for (let attempt = 0; attempt < 32; attempt += 1) {
       const side = "right";
