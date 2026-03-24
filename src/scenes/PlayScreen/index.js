@@ -138,13 +138,24 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
     }
   }
 
+  if (themeId === "train") {
+    return {
+      x: stage.clientWidth + entityWidth * 0.72,
+      y: (bounds.minY + bounds.maxY) * 0.5,
+      targetX: bounds.maxX - entityWidth * 0.18,
+      targetY: (bounds.minY + bounds.maxY) * 0.5,
+      bounds,
+      bandY: (bounds.minY + bounds.maxY) * 0.5
+    };
+  }
+
   return {
-    x: -entityWidth * 0.7,
-    y: (bounds.minY + bounds.maxY) * 0.5,
-    targetX: bounds.maxX - entityWidth * 0.2,
-    targetY: (bounds.minY + bounds.maxY) * 0.5,
+    x: stage.clientWidth + entityWidth * 0.72,
+    y: clamp((bounds.minY + bounds.maxY) * 0.52, bounds.minY + 24, bounds.maxY - 24),
+    targetX: randomBetween(bounds.minX + 60, bounds.maxX - 60),
+    targetY: clamp((bounds.minY + bounds.maxY) * 0.54, bounds.minY + 30, bounds.maxY - 30),
     bounds,
-    bandY: (bounds.minY + bounds.maxY) * 0.5
+    bandY: (bounds.minY + bounds.maxY) * 0.54
   };
 }
 
