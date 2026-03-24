@@ -75,7 +75,7 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
     const laneCount = isBoss ? 2 : 4;
 
     for (let attempt = 0; attempt < 32; attempt += 1) {
-      const side = Math.random() < 0.5 ? "left" : "right";
+      const side = "right";
       const laneIndex = Math.floor(Math.random() * laneCount);
       const laneY = laneCenter(bounds, laneCount, laneIndex);
       const y = clamp(laneY + randomBetween(-20, 20), bounds.minY + 8, bounds.maxY - 8);
@@ -94,12 +94,11 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
   } else {
     const laneCount = isBoss ? 3 : 5;
     const entries = [
-      { side: "left", vertical: "mid" },
-      { side: "right", vertical: "mid" },
-      { side: "left", vertical: "upper" },
-      { side: "right", vertical: "upper" },
-      { side: "left", vertical: "lower" },
-      { side: "right", vertical: "lower" }
+      { origin: "right", vertical: "upper" },
+      { origin: "right", vertical: "mid" },
+      { origin: "right", vertical: "lower" },
+      { origin: "top", vertical: "center" },
+      { origin: "bottom", vertical: "center" }
     ];
 
     for (let attempt = 0; attempt < 40; attempt += 1) {
@@ -107,19 +106,26 @@ function pickSpawnCourse(stage, entityWidth, entities, isBoss, themeId) {
       const laneIndex = Math.floor(Math.random() * laneCount);
       const laneY = laneCenter(bounds, laneCount, laneIndex);
       const offsetY = randomBetween(-26, 26);
-      const sideLeft = entry.side === "left";
-      const x = sideLeft ? -margin : stage.clientWidth + margin;
+      let x = stage.clientWidth + margin;
       let y = clamp(laneY + offsetY, bounds.minY + 18, bounds.maxY - 18);
-      const targetX = sideLeft
-        ? randomBetween(bounds.minX + 120, bounds.maxX - 28)
-        : randomBetween(bounds.minX + 28, bounds.maxX - 120);
+      let targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
       let targetY = clamp(laneY + randomBetween(-36, 36), bounds.minY + 16, bounds.maxY - 16);
 
-      if (entry.vertical === "upper") {
-        y = bounds.minY - margin * 0.24;
+      if (entry.origin === "right" && entry.vertical === "upper") {
+        y = bounds.minY + randomBetween(12, 64);
         targetY = clamp(laneY + randomBetween(34, 86), bounds.minY + 26, bounds.maxY - 24);
-      } else if (entry.vertical === "lower") {
+      } else if (entry.origin === "right" && entry.vertical === "lower") {
+        y = bounds.maxY - randomBetween(12, 64);
+        targetY = clamp(laneY - randomBetween(34, 86), bounds.minY + 24, bounds.maxY - 26);
+      } else if (entry.origin === "top") {
+        x = randomBetween(bounds.minX + 80, bounds.maxX - 80);
+        y = bounds.minY - margin * 0.22;
+        targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
+        targetY = clamp(laneY + randomBetween(34, 86), bounds.minY + 26, bounds.maxY - 24);
+      } else if (entry.origin === "bottom") {
+        x = randomBetween(bounds.minX + 80, bounds.maxX - 80);
         y = bounds.maxY + margin * 0.18;
+        targetX = randomBetween(bounds.minX + 40, bounds.maxX - 60);
         targetY = clamp(laneY - randomBetween(34, 86), bounds.minY + 24, bounds.maxY - 26);
       }
 
@@ -291,6 +297,9 @@ export function createPlayScreen({
   let lastCountdownVoiceAt = null;
   let activeDrag = null;
   const maxObjects = isBoss ? 1 : 5;
+  const initialWaveSize = isBoss ? 1 : 5;
+  const recurringWaveSize = isBoss ? 1 : 3;
+  const waveIntervalMs = 5000;
   const entities = [];
 
   restartButton?.addEventListener("click", () => {
@@ -360,17 +369,17 @@ export function createPlayScreen({
     return entities.filter((entity) => !entity.cleared && entity.data.id === target.id).length;
   }
 
-  function spawn(forceTarget = false) {
+  function spawn(forceTarget = false, distractorOnly = false) {
     if (destroyed || resolved || entities.length >= maxObjects) {
       return;
     }
 
     const distractors = theme.objects.filter((object) => object.id !== target.id);
-    const objectData = forceTarget
+    const objectData = forceTarget || isBoss
       ? target
-      : isBoss
-        ? target
-        : (Math.random() < 0.42 ? target : distractors[Math.floor(Math.random() * distractors.length)]);
+      : distractorOnly
+        ? distractors[Math.floor(Math.random() * distractors.length)]
+        : (Math.random() < 0.18 ? target : distractors[Math.floor(Math.random() * distractors.length)]);
 
     const entity = createEntity(
       objectData,
@@ -407,18 +416,44 @@ export function createPlayScreen({
     });
   }
 
-  function scheduleSpawn() {
+  function clearWave() {
+    if (activeDrag) {
+      return;
+    }
+    entities.slice().forEach((entity) => {
+      if (!entity.dragging && !entity.cleared) {
+        removeEntity(entity);
+      }
+    });
+  }
+
+  function spawnBatch(size) {
     if (destroyed || resolved) {
       return;
     }
 
-    const targetVisible = countVisibleTargets() > 0;
-    const amount = isBoss ? 1 : 1 + Number(Math.random() < 0.24);
-    for (let i = 0; i < amount; i += 1) {
-      spawn(!targetVisible && i === 0);
+    for (let i = 0; i < size; i += 1) {
+      spawn(i === 0, i !== 0);
+    }
+  }
+
+  function scheduleSpawn(nextSize = recurringWaveSize) {
+    if (destroyed || resolved) {
+      return;
     }
 
-    spawnTimerId = window.setTimeout(scheduleSpawn, randomBetween(1600, 2600));
+    spawnTimerId = window.setTimeout(() => {
+      if (destroyed || resolved) {
+        return;
+      }
+      if (activeDrag) {
+        scheduleSpawn(nextSize);
+        return;
+      }
+      clearWave();
+      spawnBatch(nextSize);
+      scheduleSpawn(recurringWaveSize);
+    }, waveIntervalMs);
   }
 
   function startRoundSuccessFlow() {
@@ -626,9 +661,7 @@ export function createPlayScreen({
   }
 
   updateHud();
-  for (let i = 0; i < (isBoss ? 1 : 3); i += 1) {
-    spawn(i === 0);
-  }
+  spawnBatch(initialWaveSize);
   scheduleSpawn();
   animationId = window.requestAnimationFrame(tick);
 

@@ -41,16 +41,16 @@ export function createWelcomeScreen({ onStart }) {
           <span class="ocean-welcome__silhouette ocean-welcome__silhouette--d"></span>
         </div>
         <div class="ocean-welcome__shoal" data-drift="0.1">
-          ${makeParticles(16, "ocean-welcome__shoal-fish", (index) => ({
-            left: `${12 + ((index * 5.7) % 72)}%`,
-            top: `${18 + ((index * 3.9) % 28)}%`,
+          ${makeParticles(18, "ocean-welcome__shoal-fish", (index) => ({
+            left: `${10 + ((index * 5.1) % 76)}%`,
+            top: `${18 + ((index * 4.3) % 30)}%`,
             animationDelay: `${index * -0.8}s`,
-            animationDuration: `${16 + (index % 4) * 2.6}s`
+            animationDuration: `${16 + (index % 4) * 2.4}s`
           }))}
         </div>
         <div class="ocean-welcome__bubble-field" data-drift="0.12">
-          ${makeParticles(20, "ocean-welcome__bubble", (index) => ({
-            left: `${4 + ((index * 5.1) % 88)}%`,
+          ${makeParticles(22, "ocean-welcome__bubble", (index) => ({
+            left: `${4 + ((index * 4.9) % 90)}%`,
             bottom: `${-14 - (index % 4) * 10}%`,
             width: `${10 + (index % 5) * 7}px`,
             height: `${10 + (index % 5) * 7}px`,

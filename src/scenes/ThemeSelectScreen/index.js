@@ -4,14 +4,14 @@ import { attachSceneMotion } from "../../utils/sceneMotion.js";
 function renderPortal(theme) {
   const lead = theme.id === "ocean"
     ? {
-        top: "반짝 바닷속 / きらきら うみ",
-        ko: "물고기와 함께 헤엄쳐요",
-        ja: "さかなと いっしょに"
+        top: "반짝 바다 / きらきら うみ",
+        ko: "물고기를 잡으러 가요",
+        ja: "さかなを つかまえに いこう"
       }
     : {
-        top: "출발 플랫폼 / しゅっぱつ ホーム",
-        ko: "멋진 기차를 잡아봐요",
-        ja: "かっこいい でんしゃ"
+        top: "두근 기차역 / わくわく えき",
+        ko: "멋진 기차를 만나러 가요",
+        ja: "かっこいい でんしゃに あいにいこう"
       };
 
   const preview = theme.id === "ocean"
@@ -67,7 +67,7 @@ export function createThemeSelectScreen({ themes, onSelect, onFullscreen }) {
             <p class="theme-select__lead">오늘은 어디로 갈까?</p>
             <p class="theme-select__lead theme-select__lead--ja">きょうは どこへ いこう？</p>
           </div>
-          <div class="theme-select__subline">서준과 서진만의 출발 장면 / ソジュンとソジンだけの スタートシーン</div>
+          <div class="theme-select__subline">서준♥서진 전용 여행 / ソジュン♥ソジン せんよう たび</div>
         </div>
         <div class="theme-select__portals">
           ${themes.map((theme) => renderPortal(theme)).join("")}
