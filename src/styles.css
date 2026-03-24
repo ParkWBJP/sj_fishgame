@@ -729,14 +729,14 @@ h4,
 
 .drag-object {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: var(--x, -9999px);
+  top: var(--y, -9999px);
   display: grid;
   place-items: center;
   border: 0;
   background: none;
   padding: 0;
-  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%)) rotate(var(--rotate, 0deg));
+  transform: translate(-50%, -50%) rotate(var(--rotate, 0deg));
   transition:
     filter var(--transition-fast),
     opacity var(--transition-fast);
@@ -780,13 +780,13 @@ h4,
 }
 
 .drag-object.is-selected {
-  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%)) rotate(var(--rotate, 0deg)) scale(1.12);
+  transform: translate(-50%, -50%) rotate(var(--rotate, 0deg)) scale(1.12);
   z-index: 5;
 }
 
 .drag-object.is-cleared {
   opacity: 0;
-  transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%)) scale(0.4);
+  transform: translate(-50%, -50%) scale(0.4);
 }
 
 .drag-object--boss {

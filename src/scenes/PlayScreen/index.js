@@ -115,6 +115,7 @@ function createEntity({
   const width = getEntityWidth(stage, isBoss, themeId);
   const start = createEntryPosition(stage, slot, width, order);
   component.element.style.width = `${width}px`;
+  component.setPosition(start.x, start.y, 0, -1);
   stage.append(component.element);
 
   return {
